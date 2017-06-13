@@ -1,0 +1,33 @@
+{
+  "name": "watson-mm-pipeline",
+  "description": "UI for Watson Multimedia",
+  "main": "app.js",
+  "authors": [
+    "Scott W Graham <swgraham@us.ibm.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+		"angular-material": "^1.1.3",
+    "angular-route": "^1.5.8",
+    "angular-filter": "^0.5.11",
+    "wa-icons": "git@github.ibm.com:WatsonAnalytics/wa-icons.git#master",
+    "jqcloud2": "^2.0.2",
+    "videogular": "^1.4.4",
+    "videogular-controls": "^1.4.4",
+    "videogular-buffering": "^1.4.4",
+    "videogular-overlay-play": "^1.4.4",
+    "videogular-poster": "^1.4.4",
+    "videogular-themes-default": "^1.4.4",
+    "bower-videogular-youtube": "videogular-youtube#^2.0.6"
+  }
+}

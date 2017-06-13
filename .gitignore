@@ -1,0 +1,12 @@
+node_modules
+output
+bower_components
+screenshots
+feeds
+test/screenshots
+media
+public/media_files
+configs
+npm-debug.log
+.env
+.DS_Store

@@ -1,0 +1,123 @@
+<div >
+    <md-card>
+        <md-card-header>
+            <md-card-avatar>
+                <img src="/icons/SpeechtoText.svg" />
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-title">Transcript</span>
+                <span class="md-subhead">{{vm.watsonMetadata.transcript | limitTo:80}}{{vm.watsonMetadata.transcript.length > 80 ? '...' : ''}}</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+          <span ng-click="vm.showTranscript = !vm.showTranscript" class="md-caption">{{vm.transcriptWordCount()}} more words...</span>
+            <div layout="column" ng-if="vm.showTranscript">
+                <div flex>
+                    <p class="md-caption">{{vm.watsonMetadata.transcript}}</p>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <md-card-header>
+            <md-card-avatar>
+                <img src="/icons/AlchemyLanguage.svg" />
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-subhead">Categories</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <div layout="column">
+                <div flex>
+                    <p class="md-body-1 " ng-repeat="t in vm.watsonMetadata.categories">{{t.label}}[{{t.score*100|number:0}}%]</p>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <md-card-header>
+            <md-card-avatar>
+                <img src="/icons/ToneAnalyzer.svg" />
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-subhead">Tone</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <div layout="row " layout-wrap>
+                <div ng-repeat="tones in vm.watsonMetadata.document_tone.tone_categories ">
+                    <md-button ng-repeat="t in tones.tones | orderBy:'-score'" md-colors="{background: 'grey-100'} ">
+                        {{t.tone_name}}:{{t.score*100|number:0}}%
+                    </md-button>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <md-card-header>
+            <md-card-avatar>
+                <img src="/icons/AlchemyLanguage.svg" />
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-subhead">Entities</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <div layout="row " class="md-subhead">
+                <div flex>Type|Relevance</div>
+                <div flex>Count</div>
+                <div flex>Source Text</div>
+            </div>
+
+            <div layout="row " ng-repeat="entity in vm.watsonMetadata.entities " class="md-caption">
+                <div flex>{{entity.type}}|{{entity.relevance*100|number:0}}%</div>
+                <div flex>{{entity.count}}</div>
+                <div flex>{{entity.text}}</div>
+            </div>
+            <div ng-if="vm.watsonMetadata.custom_entities" layout="row" ng-repeat="entity in vm.watsonMetadata.custom_entities"
+                md-colors="{background: 'teal-100'}" class="md-caption">
+                <div flex>{{entity.type}}</div>
+                <div flex>{{entity.count}}</div>
+                <div flex>{{entity.text}}</div>
+            </div>
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <md-card-header>
+            <md-card-avatar>
+                <img src="/icons/AlchemyLanguage.svg" />
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-subhead">Keywords</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <div layout="row " layout-wrap>
+                <md-button ng-repeat="keyword in vm.watsonMetadata.keywords | orderBy:'-relevance'" md-colors="{background: 'grey-100'} ">
+                    {{keyword.text}}|{{keyword.relevance*100|number:0}}%
+                </md-button>
+            </div>
+            </div>
+        </md-card-content>
+    </md-card>
+    <md-card>
+        <md-card-header>
+            <md-card-avatar>
+                <img src="/icons/AlchemyLanguage.svg" />
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-subhead">Concepts</span>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <div layout="row " layout-wrap>
+                <md-button ng-repeat="concept in vm.watsonMetadata.concepts | orderBy:'-relevance'" md-colors="{background: 'grey-100'} "
+                    ng-if="concept.text.indexOf('singles') == -1">
+                    {{concept.text}}|{{concept.relevance*100|number:0}}%
+                </md-button>
+            </div>
+            </div>
+        </md-card-content>
+    </md-card>
+</div>

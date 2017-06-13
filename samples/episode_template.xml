@@ -1,0 +1,36 @@
+<rss xmlns:bing="http://bing.com/schema/media/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:series="http://search.yahoo.com/mrss/" version="2.0">
+  <!-- This is a minimum template file for using a Closed Caption file in 'ttml' format (http://www.w3.org/ns/ttml)
+     Make the changes noted below and use this in the bin/processMedia -x filename.xml to process the media
+   -->
+  <channel>
+    <!-- Update the title & description to go with your Series the Episode is part of-->
+    <title>Series Title</title>
+    <description>Series Description</description>
+    <feedType>full</feedType>
+    <changefreq>never</changefreq>
+  <item>
+    <!-- Put a Unique Guid here -- I recommend some UNIQUE almagamation of the Episode Name -->
+    <guid isPermaLink="false">some_unique_id</guid>
+
+      <!-- Fill in these based on the episode, not required but definitely helpful -->
+      <title>Episode Title</title>
+      <description>Episode Description</description>
+      <pubDate>Air Date</pubDate>
+      <!-- This is the List of Segments making up an episode -->
+      <!-- Even if it is only 1 media file for the episode put it here -->
+      <!-- title is required -->
+      <media:title>Segment Title</media:title>
+      <!-- URL To retrieve the Media File from (Locally, place a file in public/media_files to serve from here, otherwise use a remote URL) -->
+      <!-- Locally use enrich:enrichit to access the url as:  http://enrich:enrichit@localhost:<some_port>/media_files/file.mp4 -->
+      <media:content height="720" width="1280" medium="video" type="video/mp4" duration="443" url="http://enrich:enrichit@localhost:some_port/media_files/file.mp4" />
+      <!-- URL To retrieve the Closed Captioning Transcript -->
+      <media:subTitle type="xml/dfxp" url="http://enrich:enrichit@localhost:some_port/media_files/file.cc.xml" />
+      <media:video_type>Full-Episode</media:video_type>
+      <!-- Episode Title -->
+      <media:short_title>Segment Short Title (if one)</media:short_title>
+      <!-- This is the Episode Information -->
+      <!-- license is required  (but we don't care about the license...)-->
+      <media:license type="text/html">Terms of use Search</media:license>
+  </item>
+  </channel>
+</rss>

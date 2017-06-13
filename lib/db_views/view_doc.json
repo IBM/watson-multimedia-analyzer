@@ -1,0 +1,51 @@
+{
+  "_id": "_design/enricheddata",
+  "views": {
+    "episodes": {
+      "map": "function (doc) {\n  if (doc.type === 'episode' || doc.type === 'media') {\n    emit(doc, 1);\n  }\n}"
+    },
+    "segments": {
+      "map": "function (doc) {\n  if (doc.type === 'segment') {\n     emit(doc.episode, doc._id, 1);\n  }\n}"
+    },
+    "scenes": {
+      "map": "function (doc) {\n  if (doc.type === 'scene') {\n     emit(doc.segment, doc._id ,  1);\n  }\n}"
+    },
+    "moments": {
+      "map": "function (doc) {\n  if (doc.type === 'moment') {\n     emit(doc.scene, doc._id, 1);\n  }\n}"
+    },
+    "anger_tone": {
+      "map": "function (doc) {\n  if (doc.full_enrichment.document_tone) {\n    doc.full_enrichment.document_tone.tone_categories.forEach(function(tone) {\n      if (tone.category_id === 'emotion_tone') {\n        tone.tones.forEach(function(emotion) {\n          if (emotion.tone_id === 'anger' && emotion.score > 0.60 ) {\n            emit(doc._id, 1);\n          }\n        })\n      }\n    })\n  }\n}"
+    },
+    "complete-segment": {
+      "map": "function (doc) {\n if (doc.type === \"segment\") {\n   emit([doc._id, 0], doc);\n } else if (doc.type === \"scene\" ) {\n   emit([doc.post, 1], doc)\n }\n}"
+    },
+    "images": {
+      "map": "function (doc) {\n  if (doc.type === 'scene') {\n    doc.visual_recognition.map(function(vr_moment) {\n      // Emit: \n      // image.class = 'name'\n      // image.class_score = 'score'\n      // image.time = 'time'\n      // image.faces\n      if (vr_moment.images.classifiers.length > 0) {\n        vr_moment.images.classifiers.map(function(c) { \n          emit([vr_moment.time, classes[0].class, classes[0].score]);\n        })\n      }\n    })\n  }\n}"
+    },
+    "moments-with-tone": {
+      "map": "function (doc) {\n  if (doc.type === 'moment' && doc.tone) {\n     emit(doc.scene, doc._id, 1);\n  }\n}"
+    },
+    "summary": {
+      "reduce": "function (keys, values, rereduce) {\n  if (rereduce) {\n    return sum(values);\n  } else {\n    return values.length\n  }\n}",
+      "map": "function (doc) {\n  if (doc.type) {\n     emit(doc.type, 1);\n  }\n}"
+    },
+    "moments_by_segment": {
+      "map": "function (doc) {\n  if (doc.type === 'moment' && doc.segment) {\n     emit(doc.segment, doc._id, 1);\n  }\n}"
+    },
+    "episodes2": {
+      "map": "function (doc) {\n  if (doc.type === 'episode') {\n    emit(doc._id, 1);\n  }\n}"
+    },
+    "episodes_short": {
+      "map": "function (doc) {\n  if (doc.type === 'episode' || doc.type === 'media') {\n    emit([doc._id,doc.mediaMetadata], 1);\n  }\n}"
+    },
+    "vr_classes": {
+      "map": "function (doc) {\n  // Only moments have VR Classes\n  if (doc.type === 'moment') {\n    for(var idx in doc.visual_recognition.images) {\n      var image = doc.visual_recognition.images[idx];\n      for(var idx2 in image.classifiers) {\n        var C = image.classifiers[idx2];\n        for(var idx3 in C.classes) {\n          emit([C.classes[idx3].class, C.name], null);\n        }\n      }\n    }\n  }\n}",
+      "reduce": "_count"
+    },
+    "custom_entities": {
+      "map": "function (doc) {\n  if (doc.type === 'segment') {\n    for(var idx in doc.full_enrichment.custom_entities) {\n      emit(doc.full_enrichment.custom_entities[idx].type, null);\n    }\n  }\n}",
+      "reduce": "_count"
+    }
+  },
+  "language": "javascript"
+}

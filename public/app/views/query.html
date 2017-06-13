@@ -1,0 +1,144 @@
+<head>
+    <form ng-cloak>
+        <md-content layout-margin>
+            <form name="userForm">
+                <md-list-item class="noright">
+                    <md-progress-circular ng-if="vm.searching" ng-disabled="vm.searching" class="md-hue-2" md-diameter="20px"></md-progress-circular>
+                    <p>
+                    </p>
+                    <md-icon md-font-icon="design-icon-search_32" ng-style="{color: font.color, 'font-size': '24px', height: '24px'}"
+                        ng-disabled="!vm.results" ng-click="vm.results=false" class="md-secondary md-hue-3"></md-icon>
+                    <md-icon md-font-icon="design-icon-save_32" ng-style="{color: font.color, 'font-size': '24px', height: '24px'}"
+                        ng-disabled="!vm.results" ng-click="vm.showSaveSearch=true" class="md-secondary md-hue-3"></md-icon>
+                </md-list-item>
+                <div flex ng-if="vm.showSaveSearch">
+                  <section layout="row" layout-align="center center" layout-wrap>
+                  <md-input-container flex>
+                    <label>Search Name</label>
+                    <input ng-model="vm.searchName"></input>
+                    <md-button ng-click="vm.saveSearch()" flex>Save</md-button>
+                    <md-button ng-click="vm.showSaveSearch=false" flex>Cancel</md-button>
+                  </md-input-container>
+                  </section>
+                </div>
+                <div flex ng-if="vm.results">
+                    <span class="md-caption" ng-repeat="(key, value) in vm.params">
+                   {{key}}:{{value}}
+                   </span>
+                </div>
+                <div layout="column" layout-align="center center" ng-if="!vm.results">
+                  <md-select placeholder="Load search..." ng-model="vm.selectedSearch" multiple="false" md-on-open="vm.loadSearch()" md-on-close="vm.onClose()" style="min-width: 200px;">
+                        <md-option ng-value="search" md-option-empty ng-repeat="search in vm.searches">{{search.name}}</md-option>
+                    </md-select>
+                </div>
+
+                <div ng-if="!vm.results">
+                    <div layout>
+                        <div flex="20" layout layout-align="center center">
+                            <span class="md-body-1">Anger</span>
+                        </div>
+                        <md-slider flex md-discrete step="0.1" min="0" max="1" ng-model="vm.params.anger" aria-label="red" id="anger.slider"></md-slider>
+                    </div>
+                    <div layout>
+                        <div flex="20" layout layout-align="center center">
+                            <span class="md-body-1">Fear</span>
+                        </div>
+                        <md-slider flex md-discrete step="0.1" min="0" max="1" ng-model="vm.params.fear" aria-label="red" id="fear.slider"></md-slider>
+                    </div>
+                    <div layout>
+                        <div flex="20" layout layout-align="center center">
+                            <span class="md-body-1">Disgust</span>
+                        </div>
+                        <md-slider flex md-discrete step="0.1" min="0" max="1" ng-model="vm.params.disgust" aria-label="red"
+                            id="disgust.slider"></md-slider>
+                    </div>
+                    <div layout>
+                        <div flex="20" layout layout-align="center center">
+                            <span class="md-body-1">Joy</span>
+                        </div>
+                        <md-slider flex md-discrete step="0.1" min="0" max="1" ng-model="vm.params.joy" aria-label="red" id="joy.slider"></md-slider>
+                    </div>
+                    <div layout>
+                        <div flex="20" layout layout-align="center center">
+                            <span class="md-body-1">Sadness</span>
+                        </div>
+                        <md-slider flex md-discrete step="0.1" min="0" max="1" ng-model="vm.params.sadness" aria-label="red"
+                            id="sadness.slider"></md-slider>
+                    </div>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Visual Recognition</label>
+                        <md-select ng-model="vm.params.classes" multiple>
+                            <md-optgroup label="Custom">
+                                <md-option ng-value="vrclass.class" ng-repeat="vrclass in vm.vr_classes | filter: { id: '!default'}| orderBy: 'class'">{{vrclass.class}}:{{vrclass.count}}</md-option>
+                            </md-optgroup>
+                            <md-optgroup label="Default">
+                                <md-option ng-value="vrclass.class" ng-repeat="vrclass in vm.vr_classes | filter: { id: 'default'} | orderBy: 'class'">{{vrclass.class}}:{{vrclass.count}}</md-option>
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <md-select ng-model="vm.params.entities" multiple data-md-container-class="selectDemoSelectHeader">
+                            <md-select-header class="demo-select-header">
+                                <input ng-model="vm.searchTerm" type="search" placeholder="Entities..." class="demo-header-searchbox md-text">
+                            </md-select-header>
+                            <md-option ng-value="entity.key" ng-repeat="entity in vm.entity_list| orderBy">{{entity.key}}:{{entity.value}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-button class="md-primary md-block" type="submit" ng-click="vm.execute()">Submit</md-button>
+                </div>
+                <div ng-if="vm.results">
+                    <md-list class="md-dense ">
+                        <md-list-item style="margin:1px " ng-repeat="res in vm.searchresults" class="md-1-line">
+                            <div class="md-list-item-text " ng-click="vm.loadMoment(res._id)">
+                                <p class="md-caption">{{res.name}}</p>
+                            </div>
+                        </md-list-item>
+                    </md-list>
+                </div>
+                <style>
+                    /*
+           * The Material demos system does not currently allow targeting the body element, so this
+           * must go here in the HTML.
+           */
+                    
+                    body[dir=rtl] .hint {
+                        right: 2px;
+                        left: auto;
+                    }
+                    
+                    .selectdemoSelectHeader {
+                        /* Please note: All these selectors are only applied to children of elements with the 'selectdemoSelectHeader' class */
+                    }
+                    
+                    .selectdemoSelectHeader .demo-header-searchbox {
+                        border: none;
+                        outline: none;
+                        height: 100%;
+                        width: 100%;
+                        padding: 0;
+                    }
+                    
+                    .selectdemoSelectHeader .demo-select-header {
+                        box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+                        padding-left: 10.667px;
+                        height: 48px;
+                        cursor: pointer;
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        width: auto;
+                    }
+                    
+                    .selectdemoSelectHeader md-content._md {
+                        max-height: 240px;
+                    }
+                </style>
+                </div>
+
+            </form>
+        </md-content>
+
+        </div>
+
+    </form>
+</head>
