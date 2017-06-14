@@ -1,0 +1,767 @@
+'use strict';
+
+/*
+ * Media Data Header --> Pull in any data STORED in the media already.  
+ *    >> Add a 'tags' field to this at the root that we update consistenty?
+ *
+ *    The challenge/interesting thing of Text relevant to processing media is that you will have a 'Speaker' and you will have context associated w/ the speech happening (but may be in Video)
+ *    So you need to caputre an image.  Also,  'Alchemy Language' analysis is relevant in a couple of ways:
+ *
+ *    Entities:
+ *
+ *    Sentiment:
+ *
+ *    Emotion:
+ *
+ *    Keywords: (Get them at end, then tag where they occurred and dig deeper at that video)
+ *
+ *    Concept Tagging:
+ *       -->  This has the feel that we need 'Concept Tagging' at windows of text and for the whole text -- like you can know what's going on every 5 minutes of aggregated text but also for the whole audio segment. 
+ *
+ *    
+ *
+ *    Relation:  ...
+ *
+ *    Taxonomy:  < This seems like it should be for the WHOLE DOCUMENT>  Not time sensitive.
+ *
+ *
+ *
+ *    1.  Tone and Sentiment are applicable in a small scale about how a particular speaker is feeling at the time of the utterance.
+ *    2.  Taxonomy & keywords and related to the whole text
+ *
+ *    3.  Entities should be grabbable on the fly, and tagged at the time they occur. But Entity extraction needs the 'context' of the entity so it should reall be found at the end and then tagged w/ the time it occurred.
+ *    4.  Q - if the 'transcript' was quoted, would we then use the Quote feature of Entities for Sentiment, etc?
+ *
+ * { mediaMetadata: {},
+ *   transcript: {}, // Raw STT Data (w/ time stamps for words)
+ *   watson_tags:  { dynamically updated },  <-- All entities/concepts/keywords end up as tags
+ *   timeline: [
+ *     watson_enrichment,
+ *     watson_enrichment,
+ *     watson_enrichment,
+ *     watson_enrichment,
+ *   ],
+ *   watson_enrichment: {
+ *     speaker: // Speaker 1/2/etc...
+ *     tags: [],
+ *     text: text enrichment calculated from
+ *     time_key: time of enrichment
+ *     concepts: { raw_data, timeline: [ array of when concepts occurred ]},
+ *     entities: {},
+ *     taxonomy: {},
+ *     sentiment: {},
+ *     keywords: {},
+ *   },
+ * }
+ *
+ * Q : Add metadata from Closed Caption... 
+ *  Q: Language(?) 
+ *
+ * Q(swami):  How do we find similar videos... 
+ *
+ * Q:  Filter based on relevance of reuslts as well?
+ * 
+ * Should Cleanup the data:  If a words confidence is low, should we drop it? Should we use alternatives?
+ *
+ *
+
+
+class MetaData {
+  constructor() {
+
+  }
+
+}
+
+
+{
+  "_id": "1e6a0b1de28ba7048b4d5d7c80ed352e",
+  "_rev": "14-d0834aa0ead8b87291148044e8fe1a66",
+  "mediaMetadata": {
+    "id": "",
+    "Title": "orilla drags 3-year-old in shocking video",
+    "Synopsis": :"A 3-year-old boy came face to face with a 400-pound lowland gorilla after falling into an exhibit at the Cincinnati Zoo.",
+    "Author": "CNN",
+    "Category": "",
+    "creationDateTime": "May 30, 2016",
+    "formatCode": "MPEG-4",
+    "StoryNumber": "",
+    "Reporter": "",
+    "Source": ""
+  },
+  "audioTranscript": "A day of panic and desperation at the Cincinnati zoo. Iran. Will. And this isn't really a change 3 year olds are well into the group. Schooling slips into the zoo's a gorilla habitat. And over a moat wall. Suddenly her rendez a 17 year old 400 pound gorilla approaches the boy. His mother watches in horror at what happens next. I. Young boys school in the region calls to 911 be heard on this bystander. The family tries desperately to keep him calm as fiance out of sight. Perot may drag the boy around the middle and upper ladder into a 10 minute. As the zoo's dangerous animal response time anxiously decide what to do next. The little boy himself had already been talking about one that they go and go and get in the water and his mother's like no you know I know you're not I don't know if the screaming did it or too many people hanging on the edge if he thought we were coming in but then he you know pulled the boy down further away from the big group in very clear. We. Child. Right around. Officials consider the incident so threatening deciding haram they must be taken down immediately. NDA reason that tranquilizing was not chosen is in an agitated situation which the mail was it may take quite awhile for a tranquilizer take effect but certainly at the ins and he will be hit he would have a dramatic response you don't hit any falls over it would take a few minutes job was under attack but that. All sorts of. Jewish. Certainly. Was it real. They say their only option. A rifle. Romney was shot and killed. The child was taken to Cincinnati's children's hospital with non life threatening injuries. I'll prove your guard everybody Jordan but never fight for trauma it's said day all the way around. The right choice was made it was difficult choice haram day was a western lowland gorilla. Critically endangered species. The zoo had hoped he would eventually father other gorillas we love this zoo it's it very friendly and so everything is beautiful here but when you see something like that and then you have the disappointment because how do what do you say to your grandchildren. ",
+  "tone": {
+    "document_tone": {
+      "tone_categories": [
+        {
+          "tones": [
+            {
+              "score": 0.577787,
+              "tone_id": "anger",
+              "tone_name": "Anger"
+            },
+            {
+              "score": 0.48347,
+              "tone_id": "disgust",
+              "tone_name": "Disgust"
+            },
+            {
+              "score": 0.846412,
+              "tone_id": "fear",
+              "tone_name": "Fear"
+            },
+            {
+              "score": 0.034325,
+              "tone_id": "joy",
+              "tone_name": "Joy"
+            },
+            {
+              "score": 0.047346,
+              "tone_id": "sadness",
+              "tone_name": "Sadness"
+            }
+          ],
+          "category_id": "emotion_tone",
+          "category_name": "Emotion Tone"
+        },
+        {
+          "tones": [
+            {
+              "score": 0.808,
+              "tone_id": "analytical",
+              "tone_name": "Analytical"
+            },
+            {
+              "score": 0.484,
+              "tone_id": "confident",
+              "tone_name": "Confident"
+            },
+            {
+              "score": 0,
+              "tone_id": "tentative",
+              "tone_name": "Tentative"
+            }
+          ],
+          "category_id": "language_tone",
+          "category_name": "Language Tone"
+        },
+        {
+          "tones": [
+            {
+              "score": 0.169,
+              "tone_id": "openness_big5",
+              "tone_name": "Openness"
+            },
+            {
+              "score": 0.047,
+              "tone_id": "conscientiousness_big5",
+              "tone_name": "Conscientiousness"
+            },
+            {
+              "score": 0.885,
+              "tone_id": "extraversion_big5",
+              "tone_name": "Extraversion"
+            },
+            {
+              "score": 0.749,
+              "tone_id": "agreeableness_big5",
+              "tone_name": "Agreeableness"
+            },
+            {
+              "score": 0.794,
+              "tone_id": "emotional_range_big5",
+              "tone_name": "Emotional Range"
+            }
+          ],
+          "category_id": "social_tone",
+          "category_name": "Social Tone"
+        }
+      ]
+    }
+  },
+  "sentiment": {
+    "mixed": "1",
+    "score": "-0.364112",
+    "type": "negative"
+  },
+  "keywords": [
+    {
+      "relevance": "0.948332",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "western lowland gorilla"
+    },
+    {
+      "relevance": "0.933332",
+      "sentiment": {
+        "score": "-0.571383",
+        "type": "negative"
+      },
+      "text": "I. Young boys"
+    },
+    {
+      "relevance": "0.917444",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "Critically endangered species"
+    },
+    {
+      "relevance": "0.872386",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "guard everybody Jordan"
+    },
+    {
+      "relevance": "0.792625",
+      "sentiment": {
+        "score": "-0.271326",
+        "type": "negative"
+      },
+      "text": "Cincinnati zoo"
+    },
+    {
+      "relevance": "0.75742",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "pound gorilla"
+    },
+    {
+      "relevance": "0.754412",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "gorilla habitat"
+    },
+    {
+      "relevance": "0.734565",
+      "sentiment": {
+        "score": "-0.225745",
+        "type": "negative"
+      },
+      "text": "moat wall"
+    },
+    {
+      "relevance": "0.695035",
+      "sentiment": {
+        "score": "-0.331881",
+        "type": "negative"
+      },
+      "text": "NDA reason"
+    },
+    {
+      "relevance": "0.68599",
+      "sentiment": {
+        "score": "-0.300347",
+        "type": "negative"
+      },
+      "text": "upper ladder"
+    },
+    {
+      "relevance": "0.67671",
+      "sentiment": {
+        "score": "-0.508947",
+        "type": "negative"
+      },
+      "text": "little boy"
+    },
+    {
+      "relevance": "0.670248",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "big group"
+    },
+    {
+      "relevance": "0.665958",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "difficult choice"
+    },
+    {
+      "relevance": "0.661994",
+      "sentiment": {
+        "score": "-0.28403",
+        "type": "negative"
+      },
+      "text": "dramatic response"
+    },
+    {
+      "relevance": "0.65648",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "right choice"
+    },
+    {
+      "relevance": "0.653687",
+      "sentiment": {
+        "score": "-0.612584",
+        "type": "negative"
+      },
+      "text": "non life"
+    },
+    {
+      "relevance": "0.574663",
+      "sentiment": {
+        "score": "-0.804857",
+        "type": "negative"
+      },
+      "text": "haram"
+    },
+    {
+      "relevance": "0.510967",
+      "sentiment": {
+        "score": "-0.438613",
+        "type": "negative"
+      },
+      "text": "mother"
+    },
+    {
+      "relevance": "0.498479",
+      "sentiment": {
+        "score": "-0.612584",
+        "type": "negative"
+      },
+      "text": "child"
+    },
+    {
+      "relevance": "0.488698",
+      "sentiment": {
+        "score": "-0.271326",
+        "type": "negative"
+      },
+      "text": "desperation"
+    },
+    {
+      "relevance": "0.487404",
+      "sentiment": {
+        "score": "-0.571383",
+        "type": "negative"
+      },
+      "text": "bystander"
+    },
+    {
+      "relevance": "0.481778",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "rendez"
+    },
+    {
+      "relevance": "0.481387",
+      "sentiment": {
+        "score": "-0.331881",
+        "type": "negative"
+      },
+      "text": "tranquilizer"
+    },
+    {
+      "relevance": "0.476549",
+      "sentiment": {
+        "score": "-0.300347",
+        "type": "negative"
+      },
+      "text": "Perot"
+    },
+    {
+      "relevance": "0.474937",
+      "sentiment": {
+        "score": "-0.627026",
+        "type": "negative"
+      },
+      "text": "fiance"
+    },
+    {
+      "relevance": "0.468768",
+      "sentiment": {
+        "score": "-0.22529",
+        "type": "negative"
+      },
+      "text": "disappointment"
+    },
+    {
+      "relevance": "0.465719",
+      "sentiment": {
+        "score": "-0.22529",
+        "type": "negative"
+      },
+      "text": "grandchildren"
+    },
+    {
+      "relevance": "0.464817",
+      "sentiment": {
+        "score": "-0.67998",
+        "type": "negative"
+      },
+      "text": "olds"
+    },
+    {
+      "relevance": "0.461132",
+      "sentiment": {
+        "score": "-0.597127",
+        "type": "negative"
+      },
+      "text": "Romney"
+    },
+    {
+      "relevance": "0.46029",
+      "sentiment": {
+        "score": "-0.28403",
+        "type": "negative"
+      },
+      "text": "ins"
+    },
+    {
+      "relevance": "0.45953",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "text": "Schooling"
+    },
+    {
+      "relevance": "0.459426",
+      "sentiment": {
+        "score": "0.642675",
+        "type": "positive"
+      },
+      "text": "gorillas"
+    },
+    {
+      "relevance": "0.458656",
+      "sentiment": {
+        "score": "-0.271326",
+        "type": "negative"
+      },
+      "text": "panic"
+    },
+    {
+      "relevance": "0.456898",
+      "sentiment": {
+        "score": "-0.627026",
+        "type": "negative"
+      },
+      "text": "sight"
+    },
+    {
+      "relevance": "0.456815",
+      "sentiment": {
+        "score": "-0.67998",
+        "type": "negative"
+      },
+      "text": "change"
+    },
+    {
+      "relevance": "0.455822",
+      "sentiment": {
+        "score": "-0.506698",
+        "type": "negative"
+      },
+      "text": "sorts"
+    },
+    {
+      "relevance": "0.452359",
+      "sentiment": {
+        "score": "-0.365123",
+        "type": "negative"
+      },
+      "text": "time"
+    },
+    {
+      "relevance": "0.452083",
+      "sentiment": {
+        "score": "-0.627026",
+        "type": "negative"
+      },
+      "text": "family"
+    },
+    {
+      "relevance": "0.451621",
+      "sentiment": {
+        "score": "-0.804856",
+        "type": "negative"
+      },
+      "text": "incident"
+    },
+    {
+      "relevance": "0.450793",
+      "sentiment": {
+        "score": "-0.571383",
+        "type": "negative"
+      },
+      "text": "school"
+    },
+    {
+      "relevance": "0.450757",
+      "sentiment": {
+        "score": "-0.571383",
+        "type": "negative"
+      },
+      "text": "region"
+    },
+    {
+      "relevance": "0.450047",
+      "sentiment": {
+        "score": "-0.300347",
+        "type": "negative"
+      },
+      "text": "middle"
+    },
+    {
+      "relevance": "0.450025",
+      "sentiment": {
+        "score": "-0.331881",
+        "type": "negative"
+      },
+      "text": "situation"
+    },
+    {
+      "relevance": "0.449198",
+      "sentiment": {
+        "score": "-0.508947",
+        "type": "negative"
+      },
+      "text": "water"
+    },
+    {
+      "relevance": "0.448887",
+      "sentiment": {
+        "score": "-0.508947",
+        "type": "negative"
+      },
+      "text": "people"
+    },
+    {
+      "relevance": "0.448839",
+      "sentiment": {
+        "score": "-0.508947",
+        "type": "negative"
+      },
+      "text": "edge"
+    },
+    {
+      "relevance": "0.44831",
+      "sentiment": {
+        "score": "-0.328183",
+        "type": "negative"
+      },
+      "text": "rifle"
+    },
+    {
+      "relevance": "0.447278",
+      "sentiment": {
+        "score": "-0.331881",
+        "type": "negative"
+      },
+      "text": "mail"
+    },
+    {
+      "relevance": "0.447083",
+      "sentiment": {
+        "score": "-0.368279",
+        "type": "negative"
+      },
+      "text": "horror"
+    },
+    {
+      "relevance": "0.446796",
+      "sentiment": {
+        "score": "-0.28403",
+        "type": "negative"
+      },
+      "text": "job"
+    }
+  ],
+  "taxonomy": [
+    {
+      "label": "/pets/zoo",
+      "score": "0.668221"
+    },
+    {
+      "label": "/religion and spirituality/judaism",
+      "score": "0.44735"
+    },
+    {
+      "label": "/health and fitness/disease/cold and flu",
+      "score": "0.447191"
+    }
+  ],
+  "entities": [
+    {
+      "type": "Facility",
+      "relevance": "0.795857",
+      "sentiment": {
+        "type": "positive",
+        "score": "0.162225",
+        "mixed": "1"
+      },
+      "count": "5",
+      "text": "Cincinnati zoo",
+      "disambiguated": {
+        "subType": [
+          "Organization",
+          "Location"
+        ],
+        "name": "Cincinnati Zoo and Botanical Garden",
+        "geo": "39.145 -84.508",
+        "website": "http://www.cincyzoo.org",
+        "dbpedia": "http://dbpedia.org/resource/Cincinnati_Zoo_and_Botanical_Garden",
+        "freebase": "http://rdf.freebase.com/ns/m.015f0p"
+      }
+    },
+    {
+      "type": "Country",
+      "relevance": "0.266186",
+      "sentiment": {
+        "type": "negative",
+        "score": "-0.610494"
+      },
+      "count": "1",
+      "text": "Iran"
+    },
+    {
+      "type": "Person",
+      "relevance": "0.247341",
+      "sentiment": {
+        "type": "negative",
+        "score": "-0.300347"
+      },
+      "count": "1",
+      "text": "Perot"
+    },
+    {
+      "type": "FieldTerminology",
+      "relevance": "0.244747",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "count": "1",
+      "text": "endangered species"
+    },
+    {
+      "type": "City",
+      "relevance": "0.237968",
+      "sentiment": {
+        "type": "negative",
+        "score": "-0.612584"
+      },
+      "count": "1",
+      "text": "Cincinnati"
+    },
+    {
+      "type": "Person",
+      "relevance": "0.219789",
+      "sentiment": {
+        "type": "negative",
+        "score": "-0.597127"
+      },
+      "count": "1",
+      "text": "Romney"
+    },
+    {
+      "type": "Person",
+      "relevance": "0.207951",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "count": "1",
+      "text": "Jordan"
+    },
+    {
+      "type": "Quantity",
+      "relevance": "0.207951",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "count": "1",
+      "text": "10 minute"
+    },
+    {
+      "type": "Quantity",
+      "relevance": "0.207951",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "count": "1",
+      "text": "400 pound"
+    },
+    {
+      "type": "Quantity",
+      "relevance": "0.207951",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "count": "1",
+      "text": "17 year"
+    },
+    {
+      "type": "Quantity",
+      "relevance": "0.207951",
+      "sentiment": {
+        "type": "neutral"
+      },
+      "count": "1",
+      "text": "3 year"
+    }
+  ],
+  "concepts": [
+    {
+      "text": "Gorilla",
+      "relevance": "0.957065",
+      "website": "http://gorillacd.org/",
+      "dbpedia": "http://dbpedia.org/resource/Gorilla",
+      "freebase": "http://rdf.freebase.com/ns/m.0396p",
+      "opencyc": "http://sw.opencyc.org/concept/Mx4rvVjtKZwpEbGdrcN5Y29ycA"
+    },
+    {
+      "text": "Western Gorilla",
+      "relevance": "0.910954",
+      "dbpedia": "http://dbpedia.org/resource/Western_Gorilla",
+      "yago": "http://yago-knowledge.org/resource/Western_Gorilla"
+    },
+    {
+      "text": "Hominidae",
+      "relevance": "0.833326",
+      "dbpedia": "http://dbpedia.org/resource/Hominidae",
+      "freebase": "http://rdf.freebase.com/ns/m.03pzx"
+    },
+    {
+      "text": "Gorillas",
+      "relevance": "0.823104",
+      "dbpedia": "http://dbpedia.org/resource/Gorillas"
+    },
+    {
+      "text": "Western Lowland Gorilla",
+      "relevance": "0.76324",
+      "dbpedia": "http://dbpedia.org/resource/Western_Lowland_Gorilla",
+      "yago": "http://yago-knowledge.org/resource/Western_Lowland_Gorilla"
+    },
+    {
+      "text": "The Edge",
+      "relevance": "0.722231",
+      "website": "http://www.u2.com/",
+      "dbpedia": "http://dbpedia.org/resource/The_Edge",
+      "freebase": "http://rdf.freebase.com/ns/m.01vswx5",
+      "yago": "http://yago-knowledge.org/resource/The_Edge",
+      "musicBrainz": "http://zitgist.com/music/artist/a94e530f-4e9f-40e6-b44b-ebec06f7900e"
+    },
+    {
+      "text": "Endangered species",
+      "relevance": "0.7198",
+      "website": "http://www.iucnredlist.org/",
+      "dbpedia": "http://dbpedia.org/resource/Endangered_species",
+      "freebase": "http://rdf.freebase.com/ns/m.02lwm"
+    },
+    {
+      "text": "Mountain Gorilla",
+      "relevance": "0.71276",
+      "website": "http://www.gorillafund.org",
+      "dbpedia": "http://dbpedia.org/resource/Mountain_Gorilla",
+      "yago": "http://yago-knowledge.org/resource/Mountain_Gorilla"
+    }
+  ]
+}

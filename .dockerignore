@@ -1,0 +1,8 @@
+logs/*
+output/*
+node_modules
+screenshots/*
+media/*
+*/screenshots/*
+*/tests/
+.*

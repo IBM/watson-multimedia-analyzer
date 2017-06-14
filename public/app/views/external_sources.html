@@ -1,0 +1,94 @@
+<md-content flex layout-padding>
+    <div ng-repeat="external in vm.external.rows">
+        <md-card>
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-subhead">{{external.key.payload}}</span>
+                    <span class="md-subhead">{{external.key.features.title}}</span>
+                    <span class="md-subhead">{{external.key.features.author}}</span>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+            </md-card-content>
+        </md-card>
+        <md-card>
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-subhead">Categories</span>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <div layout="column">
+                    <div flex>
+                        <p class="md-body-1 " ng-repeat="t in external.key.features.categories">{{t.label}}[{{t.score*100|number:0}}%]</p>
+                    </div>
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card>
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-subhead">Doc Emotion</span>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <div layout="row " layout-wrap>
+                    <md-button ng-repeat="(key, value) in external.key.features['doc-emotion']" md-colors="{background: 'grey-100'} ">
+
+                        {{key}}:{{value*100|number:0}}%
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card>
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-subhead">Entities</span>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <div layout="row " class="md-subhead">
+                    <div flex>Type|Relevance</div>
+                    <div flex>Count</div>
+                    <div flex>Source Text</div>
+                </div>
+                <div layout="row " ng-repeat="entity in external.key.features.entity | orderBy:'-relevance'| limitTo:5"
+                    class="md-caption">
+                    <div flex>{{entity.type}}|{{entity.relevance*100|number:0}}%</div>
+                    <div flex>{{entity.count}}</div>
+                    <div flex>{{entity.text}}</div>
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card>
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-subhead">Keywords</span>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <div layout="row " layout-wrap>
+                    <md-button ng-repeat="keyword in external.key.features.keyword | orderBy:'-relevance'|limitTo:5" md-colors="{background: 'grey-100'} ">
+                        {{keyword.text}}|{{keyword.relevance*100|number:0}}%
+                    </md-button>
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card>
+            <md-card-header>
+                <md-card-header-text>
+                    <span class="md-subhead">Concepts</span>
+                </md-card-header-text>
+            </md-card-header>
+            <md-card-content>
+                <div layout="row " layout-wrap>
+                    <md-button ng-repeat="concept in external.key.features.concept | orderBy:'-relevance'|limitTo:5" md-colors="{background: 'grey-100'} "
+                        ng-if="concept.text.indexOf('singles') == -1">
+                        {{concept.text}}|{{concept.relevance*100|number:0}}%
+                    </md-button>
+                </div>
+    </div>
+    </md-card-content>
+    </md-card>
+    </div>
+</md-content>

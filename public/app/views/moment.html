@@ -1,0 +1,70 @@
+<md-card ng-if="vm.watsonMetadata.type === 'scene'">
+    <md-card-header>
+        <md-card-avatar>
+            <md-icon md-font-icon="design-icon-clock_time_32" ng-style="{color: font.color, 'font-size':'32px', height: '32px'}"></md-icon>
+        </md-card-avatar>
+        <md-card-header-text>
+            <span class="md-title">Scene {{vm.watsonMetadata.name}} - Moment {{vm.moment.time}}</span>
+            <span class="md-subhead" ng-click="vm.gotoMoment(vm.moment.time)">Show Moment</span>
+        </md-card-header-text>
+        <!-- <md-slider flex ng-model="vm.momentTime" min="{{vm.momentMin|| 0}}" max="{{vm.momentMax||10}}" step="5" md-discrete></md-slider> -->
+        </div>
+    </md-card-header>
+    <md-card-content style="height: 250px; overflow-y: auto">
+        <!-- Start of our metadata display -->
+        <span class="md-caption">{{vm.moment.text}}</span>
+        <!--
+                                    <pre>{{moment.visual_recognition.images[0]| json}}</pre>
+                                    -->
+        <div layout="row ">
+            <div flex-gt-sm="30 " flex>
+                <div class="md-dense ">
+                    <md-subheader>Classes[{{vm.moment.visual_recognition.images[0].classifiers.length}}]</md-subheader>
+                    <div ng-repeat="class in vm.moment.visual_recognition.images[0].classifiers ">
+                        <div style="margin:1px " ng-repeat="c in class.classes | orderBy:'-score'" class="md-2-line ">
+                            <p class="md-body-2">{{c.class}}[{{c.score*100|number:0}}%]</p>
+                            <p class="md-caption">{{c.type_hierarchy}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div flex-gt-sm="30 " flex>
+                <div class="md-dense ">
+                    <md-subheader class="md-no-sticky ">Faces[{{vm.moment.visual_recognition.images[0].faces.length}}]</md-subheader>
+                    <div style="margin:1px" class="md-3-line " ng-repeat="face in vm.moment.visual_recognition.images[0].faces ">
+                        <p class="md-body-2">{{face.gender.gender}} - {{face.gender.score*100 | number:0}}%</p>
+                        <p class="md-caption">{{face.age.min}} - {{face.age.max}}</p>
+                        <p class="md-body-2">{{face.identity.name}}[{{face.identity.score*100|number:0}}%]</p>
+                        <p class="md-caption">{{face.identity.type_hierarchy}}</p>
+                        <p class="md-caption">x:{{face.face_location.left}} y:{{face.face_location.top}}| {{face.face_location.width}}x{{face.face_location.height}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div flex-gt-sm="30 " flex>
+                <div class="md-dense ">
+                    <md-subheader class="md-no-sticky ">Words[{{vm.moment.visual_recognition.images[0].words.length}}]</md-subheader>
+                    <div class="margin:1px" class="md-3-line " ng-repeat="word in vm.moment.visual_recognition.images[0].words ">
+                        <div class="md-list-item-text">
+                            <span class="md-body-2">{{word.word}} - {{word.score*100 | number:0}}%</span>
+                            <span class="md-caption">Line {{word.line_number}}</span>
+                            <span class="md-caption">x:{{word.location.left}}
+                                                            y:{{word.location.top}}|
+                                                            {{word.location.width}}x{{word.location.height}}
+                                                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div layout="row" layout-wrap>
+            <div ng-repeat="tones in vm.moment.tone.tone.document_tone.tone_categories">
+                <md-button ng-repeat="t in tones.tones | orderBy:'-score'" md-colors="{background: 'GREY'} ">
+                    {{t.tone_name}}:{{t.score*100|number:0}}%
+                </md-button>
+            </div>
+        </div>
+        <!--                                <div ng-controller="MomentController as momentCtrl "> -->
+        <!-- end of row -->
+    </md-card-content>
+</md-card>

@@ -1,0 +1,79 @@
+<div role="dialog" layout="column" layout-align="center center">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>About this Prototype</h2>
+    </div>
+  </md-toolbar>
+  <div class="demo-dialog-content">
+    <div layout="row">
+      <div flex="30">
+          <img src="icons/newwatson.png" class="largeicon" style="position:relative;top:10px:left:5px">
+      </div>
+      <div flex>
+				<h2 class="md-headline">Multimedia Enrichment Accelerator</h2>
+				<h3 class="md-title"><i>This “Powered by Watson” sales accelerator demonstrates enriching Video with Watson APIs.</i></h3>
+				<p class="md-subhead">The Media Enrichment Accelerator demonstrates how a <b>multimedia</b> file (video or audio) can be consumed and enriched using Watson.  Using SpeechToText, AlchemyAPI, Tone and Visual Recognition files are ingested and the output is organized into Moments and Scenes where enriched metadata is generated at all levels (Moment/Scene/Segment/Episode). Once consumed, the Scenes and moments can be searched for ideas (Tone/classifications/faces) that occur in the media.</p>
+      </div>
+    </div>
+		<div layout="row">
+    <md-card>
+			<md-card-title>
+				<md-card-title-text>
+                <span class="md-title">Speech To Text</span>
+								<span class="md-subhead"> Speech To Text is used to transcribe audio into Text so it can be enriched via Alchemy API and Tone.</span>
+
+				</md-card-title-text>
+				<md-card-title-media>
+            <img src="/icons/SpeechtoText.svg" class="serviceicon"/>
+				</md-card-title-media>
+			</md-card-title>
+    </md-card>
+    <md-card>
+			<md-card-title>
+				<md-card-title-text>
+                <span class="md-title">Natural Language Understanding API</span>
+								<span class="md-subhead"> NLU is used to extract Taxonomy, Entities, Concepts and Keywords from the Text(via STT or Closed Captioning). This is performed granularly at a Scene level and also collectively for the whole media file</span> 
+				</md-card-title-text>
+				<md-card-title-media>
+            <img src="/icons/AlchemyLanguage.svg" class="serviceicon"/>
+				</md-card-title-media>
+			</md-card-title>
+    </md-card>
+		</div>
+		<div layout="row">
+    <md-card>
+			<md-card-title>
+				<md-card-title-text>
+                <span class="md-title">Tone Analyzer</span>
+								<span class="md-subhead"> Tone Analyzer is used to determine the tone of speakers and sentences from the incoming text.  Tone is applied to each sentence and use to define an emotion for a Moment</span>
+				</md-card-title-text>
+				<md-card-title-media>
+            <img src="/icons/ToneAnalyzer.svg" class="serviceicon"/>
+				</md-card-title-media>
+			</md-card-title>
+    </md-card>
+    <md-card>
+			<md-card-title>
+				<md-card-title-text>
+                <span class="md-title">Visual Recognition</span>
+								<span class="md-subhead"> Visual Recognition analyzes key frames at a defined interval (usually 10 seconds) and classifies the image.  It also detects Faces and Text in the image. This information comprises a Moment in the video.</span>
+				</md-card-title-text>
+				<md-card-title-media>
+            <img src="/icons/VisualRecognition.svg" class="serviceicon"/>
+				</md-card-title-media>
+			</md-card-title>
+    </md-card>
+		</div>
+    <hr>
+		<div layout="row">
+			<div flex="30">
+				</div>
+				<div flex>
+        <p><small>For contracting, enablement, and other sales support please contact Ellen Bellino at ebellin@us.ibm.com</small></p>
+        <p><small>For technical details, please contact Scott Graham at swgraham@us.ibm.com</small></p>
+        <br>
+        <br>
+				</div>
+      </div>
+    </div>
+  </div>

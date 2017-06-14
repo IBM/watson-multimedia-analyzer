@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html ng-app="protoApp" ng-controller="mainCtrl">
+
+<head>
+  <title>Watson Media Platform</title>
+  <meta name="description" content="Prototype Media Enrichment">
+  <meta name="keywords" content="Prototype,IBM,Watson">
+  <meta name="author" content="Watson Solutions Lab">
+  <meta name="architect" content="Scott Graham ">
+  <!-- Either use bower or browserify to get the dependencies in -->
+  <!--
+    <link href="http://fonts.googleapis.com/css?family=Raleway:400,300,200,500,600,700"
+        rel="stylesheet" type="text/css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+        rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link href="http://emojicss.com/emoji.css" rel="stylesheet">
+    -->
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+  <link href="/app/styles/styles.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- for FF, Chrome, Opera -->
+  <link rel="icon" type="image/png" href="icons/newwatson.png" sizes="16x16">
+  <link rel="icon" type="image/png" href="icons/newwatson.png" sizes="32x32">
+
+  <style type="text/css">
+    html {
+      position: relative;
+      min-height: 100%;
+    }
+
+    body {
+      color: #37474F;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-weight: 200;
+    }
+
+    p {
+      margin: 4px;
+    }
+
+    td,
+    tr {
+      padding: 3px;
+      margin-top: 2px;
+      margin-bottom: 2px;
+      margin-left: 12px;
+      margin-right: 12px;
+      font-size: 88%;
+      padding-left: 13px;
+      padding-right: 7px;
+    }
+
+    tr:hover {
+      border-style: solid;
+      border-width: 1px;
+      border-color: rgba(172, 187, 226, 1.0);
+      background-color: rgba(172, 187, 226, 0.5);
+      color: black;
+      font-weight: bold;
+    }
+
+    table {
+      margin-top: 15px;
+    }
+
+    md-sidenav.right {
+      min-width: 600px !important;
+      width: 50vw !important;
+      max-width: 600px !important;
+    }
+
+    .selected-class-name {
+      background-color: #CFD8DC;
+    }
+
+    .demo-md-panel {
+      min-height: 500px;
+    }
+
+    .demo-dialog-example {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+      width: 1000px;
+    }
+
+    .demo-dialog-content {
+      padding: 0 15px;
+      width: 100%;
+    }
+
+    .demo-dialog-button {
+      width: 100%;
+    }
+
+    .demo-menu-example {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+      width: 1000px;
+    }
+
+    .demo-menu-item {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      height: 48px;
+      padding: 0 16px;
+      position: relative;
+      transition: background 0.15s linear;
+      width: auto;
+    }
+
+    .demo-menu-item:hover,
+    .demo-menu-item:focus {
+      background-color: rgb(238, 238, 238);
+    }
+
+    .demo-menu-item.selected {
+      color: rgb(16, 108, 200);
+    }
+
+    .largeicon {
+      height: 150px;
+      width: 150px;
+      padding: 10px;
+      margin-left: 60px;
+    }
+
+    .serviceicon {
+      height: 80px;
+      width: 80px;
+    }
+
+    vg-scrub-bar-cue-points.scenes .cue-point {
+      background-color: aqua !important;
+      height: 5px;
+    }
+
+    vg-scrub-bar-cue-points.moments .cue-point {
+      background-color: orange !important;
+      height: 5px;
+    }
+
+    .cue-point-timeline {
+      height: 5px !important;
+    }
+
+    .videogular-container {
+      width: 100%;
+      height: 100%;
+      margin: auto;
+    }
+
+    .videogular-container .skipButton {
+      position: absolute;
+      padding: 10px;
+      top: 10px;
+      right: 10px;
+      z-index: 99999;
+      color: white;
+      cursor: pointer;
+      background-color: #666666;
+      border: 2px #FFFFFF solid;
+      display: none;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      -ms-border-radius: 10px;
+      border-radius: 10px;
+    }
+
+    .videogular-container.audio {
+      width: 100%;
+      height: 50px;
+      margin: auto;
+    }
+
+    .videogular-container input {
+      width: 100%;
+    }
+
+    .videogular-container .barChart {
+      background-color: #507eb3;
+      height: 20px;
+      width: 0;
+    }
+
+    .videogular-container .text {
+      color: #507eb3;
+      opacity: 0;
+    }
+
+    .animable {
+      -webkit-transition: 0.5s linear all;
+      transition: 0.5s ease-out all;
+    }
+    /*
+    @media (min-width: 1201px) {
+        .videogular-container {
+            width: 760px;
+            height: 428px;
+        }
+
+        .videogular-container.audio {
+            width: 760px;
+            height: 50px;
+        }
+    }
+    @media (min-width: 768px) and (max-width: 1200px) {
+        .videogular-container {
+            width: 640px;
+            height: 360px;
+        }
+
+        .videogular-container.audio {
+            width: 640px;
+            height: 50px;
+        }
+    }
+    @media (min-width: 500px) and (max-width: 767px) {
+        .videogular-container {
+            width: 480px;
+            height: 270px;
+        }
+
+        .videogular-container.audio {
+            width: 480px;
+            height: 50px;
+        }
+    }
+    */
+
+    md-toolbar.main {
+      max-height: 45px !important;
+      min-height: 45px !important;
+    }
+
+    md-toolbar.side {
+      max-height: 72px !important;
+      min-height: 72px !important;
+    }
+
+    md-subheader.title {
+      max-height: 30px !important;
+      min-height: 30px !important;
+    }
+  </style>
+</head>
+
+<body layout="row">
+  <div layout="column" layout-fill>
+    <md-toolbar layout="column">
+      <div class="md-toolbar-tools" style="background-color:#263238">
+        <div style="position:relative;right:20px">
+          <md-button ng-click="toggleLeft()" hide-gt-md>
+            <md-icon md-menu-origin md-font-icon="design-icon-justify_32" ng-style="{color: font.color, 'font-size':'36px', height: '36px'}"></md-icon>
+          </md-button>
+          <!--
+          <md-button aria-label="Help">
+            <i class="fa fa-question" aria-hidden="true"></i>&nbsp;&nbsp;Help
+          </md-button>
+           -->
+                    <md-button aria-label="About" ng-click="showAbout($event)" class="animation-target">
+                        <i class="fa fa-info" aria-hidden="true"></i>&nbsp;&nbsp;About
+                    </md-button>
+        </div>
+        <span flex=""></span>
+        <h2> <span>Watson Multimedia </span> </h2>
+        <md-button ng-click="toggleRight()" hide-gt-lg>
+          <md-icon md-menu-origin md-font-icon="design-icon-search_32" ng-style="{color: font.color, 'font-size':'24px', height: '24px'}"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <div layout="row" ng-controller="VideoSelectorController as videoSelector" flex>
+      <!-- Sidebar -->
+      <div ng-controller="EpisodeController as eCtrl" ng-cloak>
+        <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+          <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+              <h2>Videos</h2>
+              <span flex> </span>
+              <md-progress-circular ng-if="videoSelector.episodes.length === 0" md-diameter="20px"></md-progress-circular>
+            </div>
+          </md-toolbar>
+          <md-list ng-repeat="(season, episodes) in videoSelector.seasons">
+            <md-subheader class="title md-no-sticky" style="padding:0px;background-color:#ECEFF1">
+              Loaded Media
+            </md-subheader>
+            <md-list-item style="margin:1px" ng-model="selectedIndex" ng-repeat="episode in episodes" class="md-3-line md-long-text" ng-click="videoSelector.selectEpisode(episode.guid)" ng-class="{ 'selected-class-name': $index == selectedIndex, 'md-offset':true }">
+              <div class="md-list-item-text">
+                <h3>{{episode.title}}</h3>
+                <!-- Commenting out, ugly
+                                  <md-button ng-click=showDialog($index)>Info</md-button><md-button ng-click="videoSelector.selectEpisode($index)">View</md-button>
+                                  -->
+                <p>{{episode.pubDate}}</p>
+                <p>{{episode.description | limitTo:200}}{{episode.description.length > 200 ? '...': ''}}</p>
+              </div>
+              <md-menu>
+                <md-button aria-label="Open Episode menu" class="md-icon-button" ng-click="eCtrl.openMenu($mdOpenMenu, $event)">
+                  <md-icon md-menu-origin md-font-icon="design-icon-justify_32" ng-style="{color: font.color, 'font-size':'24px', height: '24px'}" aria-label="Open Menu..."></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                  <md-menu-item>
+                    <md-button ng-click="eCtrl.showDialog(episode.guid)">
+                      <md-icon md-font-icon="design-icon-_info_moreinfo_32" aria-label="Send Email" ng-style="{color: font.color, 'font-size': '24px', height: '24px'}"></md-icon>
+                      Enrichment
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button ng-click="eCtrl.showEnrichDialog(episode.guid)">
+                      <md-icon md-font-icon="wa-icon-globe_32" aria-label="Re-enrich" ng-style="{color: font.color, 'font-size': '24px', height: '24px'}"></md-icon>
+                      Re-enrich Episode
+                    </md-button </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </md-list-item>
+          </md-list>
+        </md-sidenav>
+      </div>
+      <div layout="column" ng-cloak flex>
+        <div layout="row" layout-padding>
+          <watson-video-player episode-title="videoSelector.episodeTitle" flex></watson-video-player>
+          <div layout="column" flex>
+            <div layout="row" flex="10">
+              <div flex="10" layout-align="center center">
+                <span class="md-body-1">Moment</span>
+              </div>
+              <md-slider flex ng-model="videoSelector.displayingMomentTime" min="{{videoSelector.minMomentTime|| 0}}" max="{{videoSelector.maxMomentTime||10}}" step="{{videoSelector.momentInterval}}" md-discrete></md-slider>
+              <div flex="10"></div>
+            </div>
+            <watson-moment-viewer moment="videoSelector.displayingMoment" watson-metadata="videoSelector.selectedScene" flex></watson-moment-viewer>
+          </div> </div>
+          <div flex="10">
+            <md-tabs md-selected="videoSelector.currentSceneId" md-selected-item="0" md-dynamic-height md-border-bottom>
+              <md-tab ng-repeat="scene in videoSelector.scenes" ng-click="videoSelector.gotoScene(scene.start_time)" ng-disabled="tab.disabled" label="{{scene.name}}">
+                <div class="demo-tab tab{{$index%4}}" style="padding: 10px; text-align: left;"></div>
+              </md-tab>
+            </md-tabs>
+          </div>
+          <md-content flex>
+            <watson-metadata-viewer moment="videoSelector.displayingMoment" watson-metadata="videoSelector.selectedScene"></watson-metadata-viewer>
+          </md-content>
+        </div>
+        <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" md-is-locked-open="$mdMedia('gt-lg') " flex>
+          <md-tabs md-selected-item="0" md-dynamic-height md-border-bottom>
+            <md-tab ng-if="videoSelector.segments.length > 0" label="Segments">
+              <md-list class="md-dense ">
+                <md-list-item style="margin:1px " ng-repeat="segment in videoSelector.segments " class="md-1-line " ng-click="videoSelector.selectSegment($index) " ng-class="{ 'selected-class-name': $index==controller.now_playing} ">
+                  <div class="md-list-item-text ">
+                    <p>{{segment.title}}</p>
+                  </div>
+                </md-list-item>
+              </md-list>
+            </md-tab>
+            <md-tab label="Search">
+              <ibm-media-query></ibm-media-query>
+            </md-tab>
+          </md-tabs>
+        </md-sidenav>
+      </div>
+    </div>
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
+
+
+    <script src="bower_components/videogular/videogular.js"></script>
+    <script src="bower_components/videogular-controls/vg-controls.js"></script>
+    <script src="bower_components/videogular-overlay-play/vg-overlay-play.js"></script>
+    <script src="bower_components/videogular-poster/vg-poster.js"></script>
+    <script src="bower_components/videogular-buffering/vg-buffering.js"></script>
+
+
+
+    <!-- Want to load these from bower... -->
+    <!--
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script>
+    -->
+    <script type="text/javascript" src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/bower-videogular-youtube/youtube.js"></script>
+
+    <script src="app/app.js"></script>
+    <script src="app/services/video-services.js"></script>
+    <script src="app/services/enricher-service.js"></script>
+    <script src="app/services/query-service.js"></script>
+    <script src="app/services/social-services.js"></script>
+    <script src="app/controllers/VideoController.js"></script>
+    <script src="app/controllers/EpisodeController.js"></script>
+    <script src="app/controllers/query.directive.js"></script>
+    <script src="app/controllers/watson.metadata.viewer.directive.js"></script>
+    <script src="app/controllers/watson.moment.directive.js"></script>
+    <script src="app/controllers/watson.video.player.directive.js"></script>
+    <script src="app/controllers/watson.externalsources.directive.js"></script>
+    <script src="app/controllers/VideoSelectorController.js"></script>
+    <!--  Pulling these out ot see if we need them....
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    -->
+    <script>
+      function goBack() {
+        window.history.back();
+      }
+    </script>
+</body>
+
+</html>
