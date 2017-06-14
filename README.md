@@ -1,14 +1,14 @@
 # Using IBM Watson to enrich audio and visual files.
 
-In this developer journey we will use Watsom services to showcase how media (both audio and video) can be enriched on a timeline basis. 
+In this developer journey we will use Watson services to showcase how media (both audio and video) can be enriched on a timeline basis. 
 
 ## Included Components
 - Bluemix Watson Natural Language Understanding
-- Bluemix Watson SpeechToText
+- Bluemix Watson Speech To Text
 - Bluemix Watson Tone Analyzer
 - Bluemix Watson Visual Recognition
 - Bluemix Cloudant NoSQL DB
-- Node
+- Node.js
 - AngularJS
 
 # Steps
@@ -108,20 +108,28 @@ npm install -g bower
 ```
 ### Install dependencies
 
-  ```
-  cd watson-multimedia-analyzer
-  npm install
-  bower install
-  ```
+```
+cd watson-multimedia-analyzer
+npm install
+bower install
+```
 
 ### Configure Bluemix components
 
 Edit the [`manifest.yml`](manifest.yml) file and change the name and host to the
 Bluemix Application name you defined earlier.
+```
+### edit manifest.yml
+```
 
 Copy the [`.env.sample`](.env.sample) to `.env`, and add the associated credentials
-gathered from each of the Bluemix services. To view the credentials for each of 
-the services, click the `View Credentials` button displayed on the service tile.
+gathered from each of the Bluemix services. 
+```
+cp env.sample .env
+### edit .env
+```
+
+To view the credentials for each of the services, click the `View Credentials` button displayed on each of the service tiles.
 
 ![](doc/source/images/app-and-connections.png)
 
@@ -130,7 +138,7 @@ the services, click the `View Credentials` button displayed on the service tile.
 For encoding Speech-to-Text (STT) and Visual Recognition (VR) from the command
 line, you need to install [`ffmpeg` and `ffprobe`](https://ffmpeg.org/download.html).
 
-Ensure that the codec `linopus` is included in the version of `ffmpeg` that you install. To check this, make sure it is listed using this command:
+Ensure that the codec `libopus` is included in the version of `ffmpeg` that you install. To check this, make sure it is listed using this command:
 
 ```
 ffmpeg -encoders | grep opus
