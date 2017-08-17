@@ -1,8 +1,30 @@
+declared-services:
+  wma-visual-recognition:
+    label: watson_vision_combined
+    plan: free
+  wma-natural-language-understanding:
+    label: natural-language-understanding
+    plan: free
+  wma-tone-analyzer:
+    label: tone_analyzer
+    plan: lite
+  wma-cloudant:
+    label: cloudantNoSQLDB
+    plan: Lite
+  wma-speech-to-text:
+    label: speech_to_text
+    plan: standard
 applications:
 - path: .
-  memory: 512M
+  name: watson-multimedia-enrichment
+  buildpack: sdk-for-nodejs
+  memory: 256M
   instances: 1
-  domain: mybluemix.net
-  name: test-multimedia-enrichment
-  host: test-multimedia-enrichment
-  disk_quota: 1024M
+  disk_quota: 2048M
+  random-route: false
+  services:
+   - wma-visual-recognition
+   - wma-natural-language-understanding
+   - wma-tone-analyzer
+   - wma-cloudant
+   - wma-speech-to-text

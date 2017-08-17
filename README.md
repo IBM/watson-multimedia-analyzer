@@ -2,32 +2,58 @@
 
 In this developer journey we will use Watson services to showcase how media (both audio and video) can be enriched on a timeline basis. 
 
-## Included Components
-- Bluemix Watson Natural Language Understanding
-- Bluemix Watson Speech To Text
-- Bluemix Watson Tone Analyzer
-- Bluemix Watson Visual Recognition
-- Bluemix Cloudant NoSQL DB
-- Node.js
-- AngularJS
+!! ARCHITECTURE DIAGRAM
+
+## Flow
+
+## With Watson
+
+Want to take your Watson app to the next level? Looking to leverage Watson Brand assets? Join the [With Watson](https://www.ibm.com/watson/with-watson) program which provides exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
+
+## Included components
+
+* [Watson Natural Language Understanding](https://www.ibm.com/watson/developercloud/natural-language-understanding.html): A Bluemix service that can analyze text to extract meta-data from content such as concepts, entities, keywords, categories, sentiment, emotion, relations, semantic roles, using natural language understanding.
+* [Watson Speech-to-Text](https://www.ibm.com/watson/developercloud/speech-to-text.html): A service that converts human voice into written text.
+* [Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/tone-analyzer.html): Uses linguistic analysis to detect communication tones in written text.
+* [Watson Visual Recognition](https://www.ibm.com/watson/developercloud/visual-recognition.html): Visual Recognition understands the contents of images - visual concepts tag the image, find human faces, approximate age and gender, and find similar images in a collection.
+* [Cloudant NoSQL DB](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db): A fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema.
+
+## Featured Technologies
+* [Node.js](https://nodejs.org/): An asynchronous event driven JavaScript runtime, designed to build scalable applications.
+* AngularJS
+
+# Watch the Video
+
+!! COMING SOON
 
 # Steps
 
-**NOTE:** Perform steps 1-8 **OR** click the **Deploy to Bluemix** button and jump to step 9.
+Use the ``Deploy to Bluemix`` button **OR** create the services and run locally.
+> NOTE: Both the app server and enrichment process must be run locally. 
 
-[![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/ibm/watson-multimedia-analyzer)
+## Deploy to Bluemix
+[![Deploy to Bluemix](https://deployment-tracker.mybluemix.net/stats/3999122db8b59f04eecad8d229814d83/button.svg)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-multimedia-analyzer.git)
+
+1. Press the above ``Deploy to Bluemix`` button and then click on ``Deploy``.
+
+2. In Toolchains, click on Delivery Pipeline to watch while the app is deployed. Once deployed, the app can be viewed by clicking 'View app'.
+![](doc/source/images/toolchain-pipeline.png)
+
+3. To see the app and services created and configured for this journey, use the Bluemix dashboard. The app is named `watson-multimedia-analyzer` with a unique suffix. The following services are created and easily identified by the `wma-` prefix:
+    * wma-natural-language-understanding
+    * wma-speech-to-text
+    * wma-tone-analyzer
+    * wma-visual-recognition
+    * wma-cloudant
+
+## Run locally
+> NOTE: These steps are only needed when running locally instead of using the ``Deploy to Bluemix`` button.
 
 1. [Clone the repo](#1-clone-the-repo)
-2. [Create Bluemix application](#2-create-bluemix-application)
-3. [Create and connect Bluemix services to application](#3-create-and-connect-bluemix-services-to-application)
-4. [Enable and connect Watson Natural Language Understanding](#4-enable-and-connect-watson-natural-language-understanding)
-5. [Enable and connect Watson Speech to Text](#5-enable-and-connect-watson-speech-to-text)
-6. [Enable and connect Watson Tone Analyzer](#6-enable-and-connect-watson-tone-analyzer)
-7. [Enable and connect Watson Visual Recognition](#7-enable-and-connect-watson-visual-recognition)
-8. [Enable and connect Cloudant NoSQL DB](#8-enable-and-connect-cloudant-nosql-db)
-9. [Configure the Watson Multimedia Analzer application](#9-configure-the-watson-multimedia-analzer-application)
-10. [Run the application](#10-run-the-application)
-11. [Enrichment](#11-enrichment)
+2. [Create Watson services with IBM Bluemix](#2-create-watson-services-with-ibm-bluemix)
+3. [Configure the Watson Multimedia Analzer application](#3-configure-the-watson-multimedia-analzer-application)
+4. [Configure credentials](#4-configure-credentials)
+5. [Enrichment](#5-enrichment)
 
 ## 1. Clone the repo
 
@@ -35,67 +61,17 @@ Clone the `watson-multimedia-analyzer` locally. In a terminal, run:
 
   `$ git clone https://github.com/ibm/watson-multimedia-analyzer`
 
-## 2. Create Bluemix Application
+### 2. Create Watson services with IBM Bluemix
 
-Login to your Bluemix account, and proceed to the 
-[**Apps -> Clound Foundry Apps**](https://console.ng.bluemix.net/dashboard/cf-apps) panel. Click on **Create Cloud Foundry app** and 
-select **SDK for Node.js** as your application type.
+Create the following services:
 
-From the creation panel, enter a unique name for **App Name**.
+* [**Watson Visual Recognition**](https://console.bluemix.net/catalog/services/visual-recognition)
+* [**Watson Speech to Text**](https://console.bluemix.net/catalog/services/speech-to-text)
+* [**Watson Tone Analyzer**](https://console.ng.bluemix.net/catalog/services/tone-analyzer)
+* [**Watson Natural Language Understanding**](https://console.ng.bluemix.net/catalog/services/natural-language-understanding)
+* [**Watson Cloudant NoSQL DB**](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
 
-![](doc/source/images/create-app.png)
-
-## 3. Create and connect Bluemix services to application
-
-Create and connect the following services to your Bluemix application:
-
-  * [**Watson Natural Language Understanding**](https://console.ng.bluemix.net/catalog/services/natural-language-understanding)
-  * [**Watson Speech to Text**](https://console.ng.bluemix.net/catalog/services/speech-to-text/)
-  * [**Watson Tone Analyzer**](https://console.ng.bluemix.net/catalog/services/tone-analyzer/)
-  * [**Watson Visual Recognition**](https://console.ng.bluemix.net/catalog/services/visual-recognition/)
-  * [**Cloudant NoSQL DB**](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db/)
-
-Click the **Connect New** button to view and select each of the Bluemix 
-services.
-
-![](doc/source/images/create-connections.png)
-
-## 4. Enable and connect Watson Natural Language Understanding
-
-Select the **Watson Natural Language Understanding** service. From the 
-**Connect to** list, select your "multimedia analyzer application" name.
-
-![](doc/source/images/connect-nlu.png)
-
-## 5. Enable and connect Watson Speech to Text
-
-Select the **Watson Speech to Text** service. From the 
-**Connect to** list, select your "multimedia analyzer application" name.
-
-![](doc/source/images/connect-stt.png)
-
-## 6. Enable and connect Watson Tone Analyzer
-
-Select the **Watson Tone Analyzer** service. From the 
-**Connect to** list, select your "multimedia analyzer application" name.
-
-![](doc/source/images/connect-tone.png)
-
-## 7. Enable and connect Watson Visual Recognition
-
-Select the **Watson Visual Recognition** service. From the 
-**Connect to** list, select your "multimedia analyzer application" name.
-
-![](doc/source/images/connect-vr.png)
-
-## 8. Enable and connect Cloudant NoSQL DB
-
-Select the **Cloudant NoSQL DB** service. From the 
-**Connect to** list, select your "multimedia analyzer application" name.
-
-![](doc/source/images/connect-nosql.png)
-
-## 9. Configure the Watson Multimedia Analzer application
+## 3. Configure the Watson Multimedia Analzer application
 
 ### Install package managers
 
@@ -114,24 +90,48 @@ npm install
 bower install
 ```
 
-### Configure Bluemix components
+### 4. Configure credentials
 
-Edit the [`manifest.yml`](manifest.yml) file and change the name and host to the
-Bluemix Application name you defined earlier.
-```
-### edit manifest.yml
-```
+The credentials for Bluemix services (Visual Recognition, Speech to Text, Tone Analyzer, 
+Natural Language Understanding, and Cloudant NoSQL DB), can be found in the ``Services`` menu in Bluemix,
+by selecting the ``Service Credentials`` option for each service.
 
-Copy the [`.env.sample`](.env.sample) to `.env`, and add the associated credentials
-gathered from each of the Bluemix services. 
-```
-cp env.sample .env
-### edit .env
-```
+Copy the [`env.sample`](env.sample) to `.env`.
 
-To view the credentials for each of the services, click the `View Credentials` button displayed on each of the service tiles.
+```
+$ cp env.sample .env
+```
+Edit the `.env` file with the necessary settings.
 
-![](doc/source/images/app-and-connections.png)
+#### `env.sample:`
+
+```
+# Replace the credentials here with your own.
+# Rename this file to .env before starting the app.
+
+# Cloudant NoSQL DB Credentials and Config options (Required)
+DB_USERNAME=<add_db_username>
+DB_PASSWORD=<add_db_password>
+DB_HOST=<add_db_host_name>
+DB_PORT=<add_db_port_num>
+DB_URL=<add_db_url>
+
+# Tone Analyzer Credentials
+TONE_USERNAME=<add_tone_username>
+TONE_PASSWORD=<add_tone_password>
+
+# SpeechToText Credentials
+STT_USERNAME=<add_stt_username>
+STT_PASSWORD=<add_stt_username>
+
+# Visual Recognition Key
+VR_KEY=<add_vr_recognition_key>
+
+# Natural Language Understanding Credentials and endpoint
+NLU_URL=<add_nlu_url>
+NLU_USERNAME=<add_nlu_username>
+NLU_PASSWORD=<add_nlu_password>
+```
 
 ### Enable enrichment
 
