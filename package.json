@@ -1,6 +1,6 @@
 {
-  "name": "WatsonMulitMediaPipeline",
-  "version": "0.0.5",
+  "name": "watson-multimedia-analyzer",
+  "version": "0.0.6",
   "private": true,
   "scripts": {
     "start": "node app.js | node_modules/.bin/pino "

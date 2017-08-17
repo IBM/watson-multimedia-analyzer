@@ -62,4 +62,4 @@ output
 screenshots
 feeds
 .DS_Store
-public/media_files
+# public/media_files
