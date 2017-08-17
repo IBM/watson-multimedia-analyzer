@@ -42,6 +42,8 @@ const vmnSocial= require('./lib/query/vmn-social');
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 
+require('cf-deployment-tracker-client').track();
+
 // create a new express server
 var app = express();
 
