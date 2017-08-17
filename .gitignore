@@ -62,4 +62,5 @@ output
 screenshots
 feeds
 .DS_Store
+.vscode/
 # public/media_files
