@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/IBM/watson-multimedia-analyzer.svg?branch=master)](https://travis-ci.org/IBM/watson-multimedia-analyzer)
+![Bluemix Deployments](https://deployment-tracker.mybluemix.net/stats/3999122db8b59f04eecad8d229814d83/badge.svg)
+
 # Using IBM Watson to enrich audio and visual files.
 
 In this developer journey we will use Watson services to showcase how media (both audio and video) can be enriched on a timeline basis. 
@@ -5,6 +8,14 @@ In this developer journey we will use Watson services to showcase how media (bot
 !! ARCHITECTURE DIAGRAM
 
 ## Flow
+
+1. Media file is passedd into the `Media Processor` enrichment process.
+2. The Watson Speech to Text Service tranlates audio to text. The text is broken up into scenes, based on a timer, a change in speaker, or a significant pause in speech.
+3. The Watson Natural Language Understanding Service pulls out keywords, entities, concepts, and taxonomy for each scene.
+4. The Watson Tone Analyzer Service extracts top emotions, social and writing tones for each scene.
+5. The Watson Visual Recognition Service takes a screen capture every 10 seconds and creats a 'moment'. Classifications, faces and words are extracted from each screen shot.
+6. All scenes and 'moments' are stored in the Watson Cloudant NoSQL DB.
+7. The app UI displays stored scenes and 'moments'.
 
 ## With Watson
 
@@ -29,7 +40,7 @@ Want to take your Watson app to the next level? Looking to leverage Watson Brand
 # Steps
 
 Use the ``Deploy to Bluemix`` button **OR** create the services and run locally.
-> NOTE: Both the app server and enrichment process must be run locally. 
+> NOTE: To enrich multimedia files, both the app server and enrichment process must be run locally. 
 
 ## Deploy to Bluemix
 [![Deploy to Bluemix](https://deployment-tracker.mybluemix.net/stats/3999122db8b59f04eecad8d229814d83/button.svg)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-multimedia-analyzer.git)
@@ -37,6 +48,7 @@ Use the ``Deploy to Bluemix`` button **OR** create the services and run locally.
 1. Press the above ``Deploy to Bluemix`` button and then click on ``Deploy``.
 
 2. In Toolchains, click on Delivery Pipeline to watch while the app is deployed. Once deployed, the app can be viewed by clicking 'View app'.
+
 ![](doc/source/images/toolchain-pipeline.png)
 
 3. To see the app and services created and configured for this journey, use the Bluemix dashboard. The app is named `watson-multimedia-analyzer` with a unique suffix. The following services are created and easily identified by the `wma-` prefix:
@@ -53,7 +65,9 @@ Use the ``Deploy to Bluemix`` button **OR** create the services and run locally.
 2. [Create Watson services with IBM Bluemix](#2-create-watson-services-with-ibm-bluemix)
 3. [Configure the Watson Multimedia Analzer application](#3-configure-the-watson-multimedia-analzer-application)
 4. [Configure credentials](#4-configure-credentials)
-5. [Enrichment](#5-enrichment)
+5. [Run application](#5-run-application)
+6. [Enrich multimedia files](#6-enrich-multimedia-files)
+7. [View resullts in UI](#7-view-results-in-ui)
 
 ## 1. Clone the repo
 
@@ -109,6 +123,10 @@ Edit the `.env` file with the necessary settings.
 # Replace the credentials here with your own.
 # Rename this file to .env before starting the app.
 
+# Cloudant Credentials
+# The name of your database (Created upon startup of APP) You can leave this alone and use default below
+DB_NAME=video_metadata_db
+
 # Cloudant NoSQL DB Credentials and Config options (Required)
 DB_USERNAME=<add_db_username>
 DB_PASSWORD=<add_db_password>
@@ -117,47 +135,22 @@ DB_PORT=<add_db_port_num>
 DB_URL=<add_db_url>
 
 # Tone Analyzer Credentials
-TONE_USERNAME=<add_tone_username>
-TONE_PASSWORD=<add_tone_password>
+TONE_ANALYZER_USERNAME=<add_tone_username>
+TONE_ANALYZER_PASSWORD=<add_tone_password>
 
 # SpeechToText Credentials
-STT_USERNAME=<add_stt_username>
-STT_PASSWORD=<add_stt_username>
+SPEECH_TO_TEXT_USERNAME=<add_stt_username>
+SPEECH_TO_TEXT_PASSWORD=<add_stt_username>
 
 # Visual Recognition Key
 VR_KEY=<add_vr_recognition_key>
 
-# Natural Language Understanding Credentials and endpoint
-NLU_URL=<add_nlu_url>
-NLU_USERNAME=<add_nlu_username>
-NLU_PASSWORD=<add_nlu_password>
+# Natural Language Understanding Credentials
+NATURAL_LANGUAGE_UNDERSTANDING_USERNAME=<add_nlu_username>
+NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD=<add_nlu_password>
 ```
 
-### Enable enrichment
-
-For encoding Speech-to-Text (STT) and Visual Recognition (VR) from the command
-line, you need to install [`ffmpeg` and `ffprobe`](https://ffmpeg.org/download.html).
-
-Ensure that the codec `libopus` is included in the version of `ffmpeg` that you install. To check this, make sure it is listed using this command:
-
-```
-ffmpeg -encoders | grep opus
-```
-
-### Configure application credentials
-
-Username and password are defined by the object `users` in [`app.js`](app.js). The default username/password credentials are `enrich`/`enrichit`. 
-
-Note that the default credentials must NOT be removed. You can, however, add
-additional credentials.
-
-## 10. Run the application
-
-### Run the application locally
-
-Note that the application must be run locally to perform enrichment.
-
-* Start the enrichment Service
+### 5. Run application
 
 ```
 npm start
@@ -183,22 +176,12 @@ server starting on http://localhost:6007
 ```
 *  UI will be available where indicated (in this example: http://localhost:6007/)
 
-### Deploy the Application to Bluemix
-You are now ready to deploy the application to Bluemix.
+### 6. Enrich multimedia files
 
-* Download and install the [Cloud Foundry CLI](https://console.ng.bluemix.net/docs/cli/index.html#cli) tool.
-* From the root directory of this project run the following command:
-```
-cf push
-```
-* You should see a lot of activity as the application is deployed to Bluemix. At the end of the activity, the application should be 'Starter'.
-* Access the application using the following url:
-```
-http:\\{BLUEMIX_APPLICATION_NAME}.mybluemix.net
-```
-* When prompted for a username and password, use the credentials stored in `app.js`.
+To enrich media files, they need to be processed by the `processMedia` function.
 
-## 11. Enrichment
+For encoding Speech-to-Text (STT) and Visual Recognition (VR) from the command
+line, you need to install [`ffmpeg` and `ffprobe`](https://ffmpeg.org/download.html).
 
 Enrichment is initiated via the command line using `bin/processMedia`.  The usage for the command is as follows:
 
@@ -267,3 +250,89 @@ Save this file as a new name somewhere (like `feeds`):
 ```
 bin/processMedia -V -x feeds/new_feed.xml
 ```
+
+### 7. View resullts in UI
+
+Point your browser to the URL specified when the server was started. For example:
+
+`http://localhost:6007/`
+
+Username and password are defined by the object `users` in [`app.js`](app.js). The default username/password credentials are `enrich`/`enrichit`. 
+
+Note that the default credentials must NOT be removed. You can, however, add additional credentials.
+
+### Deploy the Application to Bluemix
+You are now ready to deploy the application to Bluemix.
+
+* Download and install the [Cloud Foundry CLI](https://console.ng.bluemix.net/docs/cli/index.html#cli) tool.
+* From the root directory of this project run the following command:
+```
+cf push
+```
+* You should see a lot of activity as the application is deployed to Bluemix. At the end of the activity, the application should be 'Starter'.
+* Access the application using the following url:
+```
+http:\\{BLUEMIX_APPLICATION_NAME}.mybluemix.net
+```
+* When prompted for a username and password, use the credentials stored in `app.js`.
+
+# Sample Output
+
+![](doc/source/images/sample-output.png)
+
+# Troubleshooting
+
+* `ffmpeg` reports error that "audio codec libopus is not available"
+
+Ensure that the codec `libopus` is included in the version of `ffmpeg` that you install. To check this, make sure it is listed using this command:
+
+```
+ffmpeg -encoders | grep opus
+```
+
+* `ffprobe` reports error
+
+Ensure you are on at least version 3.3.1
+
+* Enrichment does not complete or reports errors
+
+Note that there are several Bluemix trial version limitations that you may run into if you attempt to enrich multiple OR large mp4 files. 
+
+Watson Tone Analyzer - max of 2500 API calls.<br> 
+Solution - delete and create new service instance
+
+Watson Visual Recognition - max of 250 API calls per day.<br>
+Solution - wait 24 hours to run again.
+
+# License
+
+[Apache 2.0](LICENSE)
+
+# Privacy Notice
+
+If using the Deploy to Bluemix button some metrics are tracked, the following
+information is sent to a [Deployment Tracker](https://github.com/IBM-Bluemix/cf-deployment-tracker-service) service
+on each deployment:
+
+* Node.js package version
+* Node.js repository URL
+* Application Name (`application_name`)
+* Application GUID (`application_id`)
+* Application instance index number (`instance_index`)
+* Space ID (`space_id`)
+* Application Version (`application_version`)
+* Application URIs (`application_uris`)
+* Labels of bound services
+* Number of instances for each bound service and associated plan information
+
+This data is collected from the `package.json` file in the sample application and the ``VCAP_APPLICATION``
+and ``VCAP_SERVICES`` environment variables in IBM Bluemix and other Cloud Foundry platforms. This
+data is used by IBM to track metrics around deployments of sample applications to IBM Bluemix to
+measure the usefulness of our examples, so that we can continuously improve the content we offer
+to you. Only deployments of sample applications that include code to ping the Deployment Tracker
+service will be tracked.
+
+## Disabling Deployment Tracking
+
+To disable tracking, simply remove ``cf_deployment_tracker.track()`` from the
+``app.js`` file in the top level directory.
