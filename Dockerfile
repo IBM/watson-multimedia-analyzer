@@ -1,11 +1,11 @@
 FROM ibmcom/ibmnode:latest
 MAINTAINER Scott Graham <swgraham@us.ibm.com>
 #
-#  This is the watson-multimedia-pipeline image
+#  This is the watson-multimedia-analyzer image
 #
 ENV NODE_ENV production
-ADD . /watson-multimedia-pipeline
-WORKDIR /watson-multimedia-pipeline
+ADD . /watson-multimedia-analyzer
+WORKDIR /watson-multimedia-analyzer
 
 RUN apt-get update \
   && apt-get -y install vim \
