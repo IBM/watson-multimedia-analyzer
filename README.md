@@ -248,7 +248,7 @@ Save this file as a new name somewhere (like `feeds`):
 bin/processMedia -V -x feeds/new_feed.xml
 ```
 
-### 6. View resullts in UI
+### 6. View results in UI
 
 Point your browser to the URL specified when the server was started. For example:
 
@@ -262,7 +262,7 @@ Note that the default credentials must NOT be removed. You can, however, add add
 After you have enriched your media files, you can re-deploy the application to Bluemix so that you can view the UI remotely. 
 
 * Download and install the [Cloud Foundry CLI](https://console.ng.bluemix.net/docs/cli/index.html#cli) tool.
-* Determine the Bluemix application name from the Bluemix application dashboard. The name will be ``watson-multimedia-pipeline`` with a unique suffix. 
+* Determine the Bluemix application name from the Bluemix application dashboard. The name will be ``watson-multimedia-analyzer`` with a unique suffix. 
 * From the root directory of this project run the following command:
 
 ```
