@@ -210,10 +210,10 @@ If you just have an MP4 or Wav file locally on your machine, you can just enrich
 For convenience, use the supplied sample mp4 file:
 ```
 # STT Only
-bin/processMedia -S -f public/media_files/terror-on-ice.mp4
+bin/processMedia -S -f public/media_files/grid-breakers.mp4
 
 # STT & VR (Will take a lot longer)
-bin/processMedia -S -V -f public/media_files/terror-on-ice.mp4
+bin/processMedia -S -V -f public/media_files/grid-breakers.mp4
 ```
 
 ### Enrich from a URL pointing to a MP4/WAV file (Using STT)
