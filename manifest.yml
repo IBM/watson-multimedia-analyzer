@@ -16,7 +16,7 @@ declared-services:
     plan: standard
 applications:
 - path: .
-  name: watson-multimedia-enrichment
+  name: watson-multimedia-analyzer
   buildpack: sdk-for-nodejs
   memory: 256M
   instances: 1

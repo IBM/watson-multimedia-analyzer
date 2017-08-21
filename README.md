@@ -9,7 +9,7 @@ In this developer journey we will use Watson services to showcase how media (bot
 
 ## Flow
 
-1. Media file is passedd into the `Media Processor` enrichment process.
+1. Media file is passed into the `Media Processor` enrichment process.
 2. The Watson Speech to Text Service tranlates audio to text. The text is broken up into scenes, based on a timer, a change in speaker, or a significant pause in speech.
 3. The Watson Natural Language Understanding Service pulls out keywords, entities, concepts, and taxonomy for each scene.
 4. The Watson Tone Analyzer Service extracts top emotions, social and writing tones for each scene.
@@ -39,8 +39,14 @@ Want to take your Watson app to the next level? Looking to leverage Watson Brand
 
 # Steps
 
-Use the ``Deploy to Bluemix`` button **OR** create the services and run locally.
+This journey contains multiple apps - the app server which communicates with the Watson services and renders the UI, and the process media app which enriches multimedia files. Both of these need to be run locally to enrich media files. Once media files are enriched, the app server can be deployed to Bluemix so that the UI can be run remotely.
+
 > NOTE: To enrich multimedia files, both the app server and enrichment process must be run locally. 
+
+For convenience, we recommend that you use the ``Deploy to Bluemix`` button to initially create the Watson services and deploy the Watson Multimedia Analyzer application. Using this feature will provide the following benefits:
+* All Watson services are automatically created and associated with the deployed app.
+* Watson service credentials will be centrally located and easily accessible.
+* Once you have completed this journey, all of the Watson services can be automatically deleted along with deployed app.
 
 ## Deploy to Bluemix
 [![Deploy to Bluemix](https://deployment-tracker.mybluemix.net/stats/3999122db8b59f04eecad8d229814d83/button.svg)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-multimedia-analyzer.git)
@@ -58,16 +64,14 @@ Use the ``Deploy to Bluemix`` button **OR** create the services and run locally.
     * wma-visual-recognition
     * wma-cloudant
 
-## Run locally
-> NOTE: These steps are only needed when running locally instead of using the ``Deploy to Bluemix`` button.
+> Note: Even though the `watson-mulitmedia-analyzer` has been deployed to Bluemix and can be accessed remotely, it will not display correctly until the following steps are completed.
 
 1. [Clone the repo](#1-clone-the-repo)
-2. [Create Watson services with IBM Bluemix](#2-create-watson-services-with-ibm-bluemix)
-3. [Configure the Watson Multimedia Analzer application](#3-configure-the-watson-multimedia-analzer-application)
-4. [Configure credentials](#4-configure-credentials)
-5. [Run application](#5-run-application)
-6. [Enrich multimedia files](#6-enrich-multimedia-files)
-7. [View resullts in UI](#7-view-results-in-ui)
+2. [Configure the Watson Multimedia Analzer application](#2-configure-the-watson-multimedia-analzer-application)
+3. [Configure credentials](#3-configure-credentials)
+4. [Run application](#4-run-application)
+5. [Enrich multimedia files](#5-enrich-multimedia-files)
+6. [View resullts in UI](#6-view-results-in-ui)
 
 ## 1. Clone the repo
 
@@ -75,17 +79,7 @@ Clone the `watson-multimedia-analyzer` locally. In a terminal, run:
 
   `$ git clone https://github.com/ibm/watson-multimedia-analyzer`
 
-### 2. Create Watson services with IBM Bluemix
-
-Create the following services:
-
-* [**Watson Visual Recognition**](https://console.bluemix.net/catalog/services/visual-recognition)
-* [**Watson Speech to Text**](https://console.bluemix.net/catalog/services/speech-to-text)
-* [**Watson Tone Analyzer**](https://console.ng.bluemix.net/catalog/services/tone-analyzer)
-* [**Watson Natural Language Understanding**](https://console.ng.bluemix.net/catalog/services/natural-language-understanding)
-* [**Watson Cloudant NoSQL DB**](https://console.bluemix.net/catalog/services/cloudant-nosql-db)
-
-## 3. Configure the Watson Multimedia Analzer application
+## 2. Configure the Watson Multimedia Analzer application
 
 ### Install package managers
 
@@ -104,11 +98,14 @@ npm install
 bower install
 ```
 
-### 4. Configure credentials
+### 3. Configure credentials
 
-The credentials for Bluemix services (Visual Recognition, Speech to Text, Tone Analyzer, 
-Natural Language Understanding, and Cloudant NoSQL DB), can be found in the ``Services`` menu in Bluemix,
+The credentials for Bluemix services (Visual Recognition, Speech to Text, Tone Analyzer, Natural Language Understanding, and Cloudant NoSQL DB), can be found in the ``Services`` menu in Bluemix,
 by selecting the ``Service Credentials`` option for each service.
+
+Or, all of the credentials can be conveniently accessed by visiting the `Connections` Bluemix panel for the deployed app.
+
+![](doc/source/images/credentials-list.png)
 
 Copy the [`env.sample`](env.sample) to `.env`.
 
@@ -150,7 +147,7 @@ NATURAL_LANGUAGE_UNDERSTANDING_USERNAME=<add_nlu_username>
 NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD=<add_nlu_password>
 ```
 
-### 5. Run application
+### 4. Run application
 
 ```
 npm start
@@ -176,7 +173,7 @@ server starting on http://localhost:6007
 ```
 *  UI will be available where indicated (in this example: http://localhost:6007/)
 
-### 6. Enrich multimedia files
+### 5. Enrich multimedia files
 
 To enrich media files, they need to be processed by the `processMedia` function.
 
@@ -213,10 +210,10 @@ If you just have an MP4 or Wav file locally on your machine, you can just enrich
 For convenience, use the supplied sample mp4 file:
 ```
 # STT Only
-bin/processMedia -S -f public/media_files/terror-on-ice.mp4
+bin/processMedia -S -f public/media_files/grid-breakers.mp4
 
 # STT & VR (Will take a lot longer)
-bin/processMedia -S -V -f public/media_files/terror-on-ice.mp4
+bin/processMedia -S -V -f public/media_files/grid-breakers.mp4
 ```
 
 ### Enrich from a URL pointing to a MP4/WAV file (Using STT)
@@ -251,7 +248,7 @@ Save this file as a new name somewhere (like `feeds`):
 bin/processMedia -V -x feeds/new_feed.xml
 ```
 
-### 7. View resullts in UI
+### 6. View results in UI
 
 Point your browser to the URL specified when the server was started. For example:
 
@@ -261,20 +258,25 @@ Username and password are defined by the object `users` in [`app.js`](app.js). T
 
 Note that the default credentials must NOT be removed. You can, however, add additional credentials.
 
-### Deploy the Application to Bluemix
-You are now ready to deploy the application to Bluemix.
+### Re-Deploy the Application to Bluemix
+After you have enriched your media files, you can re-deploy the application to Bluemix so that you can view the UI remotely. 
 
 * Download and install the [Cloud Foundry CLI](https://console.ng.bluemix.net/docs/cli/index.html#cli) tool.
+* Determine the Bluemix application name from the Bluemix application dashboard. The name will be ``watson-multimedia-analyzer`` with a unique suffix. 
 * From the root directory of this project run the following command:
+
 ```
-cf push
+cf push {BLUEMIX_APPLICATION_NAME}
 ```
+
 * You should see a lot of activity as the application is deployed to Bluemix. At the end of the activity, the application should be 'Starter'.
 * Access the application using the following url:
 ```
 http:\\{BLUEMIX_APPLICATION_NAME}.mybluemix.net
 ```
-* When prompted for a username and password, use the credentials stored in `app.js`.
+* When prompted for a username and password, use the credentials stored in [`app.js`](app.js). The default username/password credentials are  `enrich`/`enrichit`.
+
+> Note: If you enrich additional media files with Visual Recognition, you will need to re-deploy the application to Bluemix to view the new content.
 
 # Sample Output
 
