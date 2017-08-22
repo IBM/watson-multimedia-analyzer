@@ -275,7 +275,7 @@
         </div>
         <span flex=""></span>
         <h2> <span>Watson Multimedia </span> </h2>
-        <md-button ng-click="toggleRight()" hide-gt-lg>
+        <md-button ng-disabled="true" ng-click="toggleRight()" hide-gt-lg>
           <md-icon md-menu-origin md-font-icon="design-icon-search_32" ng-style="{color: font.color, 'font-size':'24px', height: '24px'}"></md-icon>
         </md-button>
       </div>
@@ -316,7 +316,7 @@
                     </md-button>
                   </md-menu-item>
                   <md-menu-item>
-                    <md-button ng-click="eCtrl.showEnrichDialog(episode.guid)">
+                    <md-button ng-disabled="eCtrl.enrichDisabled" ng-click="eCtrl.showEnrichDialog(episode.guid)">
                       <md-icon md-font-icon="wa-icon-globe_32" aria-label="Re-enrich" ng-style="{color: font.color, 'font-size': '24px', height: '24px'}"></md-icon>
                       Re-enrich Episode
                     </md-button </md-menu-item>

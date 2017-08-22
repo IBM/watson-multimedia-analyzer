@@ -2,32 +2,32 @@
     .demo-md-panel {
         min-height: 500px;
     }
-    
+
     .demo-dialog-example {
         background: white;
         border-radius: 4px;
         box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
         width: 500px;
     }
-    
+
     .demo-dialog-content {
         padding: 0 15px;
         height: 600px;
         width: 100%;
     }
-    
-  
+
+
     .demo-dialog-button {
         width: 100%;
     }
-    
+
     .demo-menu-example {
         background: white;
         border-radius: 4px;
         box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
         width: 256px;
     }
-    
+
     .demo-menu-item {
         align-items: center;
         cursor: pointer;
@@ -38,12 +38,12 @@
         transition: background 0.15s linear;
         width: auto;
     }
-    
+
     .demo-menu-item:hover,
     .demo-menu-item:focus {
         background-color: rgb(238, 238, 238);
     }
-    
+
     .demo-menu-item.selected {
         color: rgb(16, 108, 200);
     }
@@ -89,48 +89,6 @@
             </md-tab>
             <md-tab label="Enrichment" ng-click="ctrl.getEpisodeEnrichment()">
                 <watson-metadata-viewer watson-metadata="ctrl.episode.full_enrichment"></watson-metadata-viewer>
-            </md-tab>
-            <md-tab ng-click="ctrl.getSocialEnrichment()">
-                <md-tab-label>
-                    <div>
-                        Social
-                    </div>
-                </md-tab-label>
-                <md-tab-body>
-                    <md-content>
-                        <md-card>
-                            <md-card-header>
-                                <md-progress-circular ng-disabled="!ctrl.loadingSocial" class="md-hue-2" md-diameter="20px"></md-progress-circular>
-                                <md-card-header-text>
-                                    <span class="md-title">{{ctrl.getTitle()}}</span>
-                                    <span class="md-subhead">Negative Tweets: {{ctrl.social.sentiment.negativeRatio|number:2}}%</span>
-                                    <span class="md-subhead">Neutral Tweets: {{ctrl.social.sentiment.neutralRatio|number:2}}%</span>
-                                    <span class="md-subhead">Positive Tweets: {{ctrl.social.sentiment.positiveRatio|number:2}}%</span>
-                                </md-card-header-text>
-                            </md-card-header>
-                            <md-card-content>
-                                <md-divider></md-divider>
-                                <p class="md-body-1">Top 5 Keywords</p>
-                                <p ng-repeat="k in ctrl.social.keywords.rows | orderBy: '-value' | limitTo:5" class="md-caption">
-                                    {{k.key}}
-                                </p>
-                                <md-divider></md-divider>
-                                <p class="md-body-1">Top 5 Concepts</p>
-                                <p ng-repeat="k in ctrl.social.concepts.rows | orderBy: '-value' | limitTo:5" class="md-caption">
-                                    {{k.key}}
-                                </p>
-                                <md-divider></md-divider>
-                                <p class="md-body-1">Top 5 Taxonomy</p>
-                                <p ng-repeat="k in ctrl.social.taxonomy.rows | orderBy: '-value' | limitTo:5" class="md-caption">
-                                    {{k.key}}
-                                </p>
-                            </md-card-content>
-                        </md-card>
-                    </md-content>
-                </md-tab-body>
-            </md-tab>
-            <md-tab label="External" ng-click="ctrl.getSocialEnrichment()">
-                <watson-external-sources external="ctrl.external_sources"></watson-external-sources>
             </md-tab>
         </md-tabs>
     </div>

@@ -4,6 +4,7 @@ describe('POST enrich text', function() {
   it('listening respond w/ welcome', function(done) {
     request(app)
       .post('/login/')
+      .auth('enrich', 'enrichit')
       .expect(200)
       .expect(function(res) {
         if (res.text !== 'welcome') {
@@ -11,10 +12,12 @@ describe('POST enrich text', function() {
         };
       }).end(done);
   })
+
   it('enrich Text', function(done) {
     this.timeout(5000);
     request(app)
       .post('/api/enrich/')
+      .auth('enrich', 'enrichit')
       .send({'text':'test'})
       .expect(200)
       .expect(function(res) {
