@@ -25,6 +25,8 @@
     var vm = this;
     vm._mdPanel = $mdPanel;
     vm.episode = {};
+    // Disable enrichment... 
+    vm.enrichDisabled=true
     vm.refresh = function() {
       vm.episode = VideoLoaderService.getCurrentEpisode();
     }

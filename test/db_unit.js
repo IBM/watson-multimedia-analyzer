@@ -24,7 +24,7 @@ describe('dbsave ', function() {
     //    fs.writeFile('output.json', JSON.stringify(metadata));
   })
 
-  it('query', function(done) {
+  xit('query', function(done) {
     var d = db.getDB();
     var tone = "Anger";
     var value = 0.0;
