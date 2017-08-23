@@ -3,7 +3,9 @@
   "version": "0.0.6",
   "private": true,
   "scripts": {
-    "start": "node app.js | node_modules/.bin/pino "
+    "start": "node app.js | node_modules/.bin/pino ",
+    "test": "mocha",
+    "lint": "eslint *.js lib test"
   },
   "dependencies": {
     "archiver": "^1.3.0",
@@ -16,6 +18,7 @@
     "connect-multiparty": "2.0.x",
     "dotenv": "^4.0.0",
     "errorhandler": "^1.5.0",
+    "eslint": "^3.19.0",
     "express": "^4.14.0",
     "express-pino-logger": "^2.0.0",
     "fluent-ffmpeg": "^2.1.0",
@@ -37,8 +40,11 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "supertest": "^2.0.0",
-    "eslint": "^2.8.0",
-    "eslint-config-airbnb-es5": "^1.0.9",
+    "eslint": "^3.14.1",
+    "eslint-plugin-node": "^4.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-config-airbnb-base": "^11.3.2",
+    "eslint-config-airbnb-es5": "^1.2.0",
     "mocha": "^2.4.5"
   }
 }

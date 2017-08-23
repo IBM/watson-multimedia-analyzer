@@ -5,7 +5,7 @@
 
 In this developer journey we will use Watson services to showcase how media (both audio and video) can be enriched on a timeline basis. 
 
-!! ARCHITECTURE DIAGRAM
+![](doc/source/images/architecture.png)
 
 ## Flow
 
@@ -286,7 +286,7 @@ http:\\{BLUEMIX_APPLICATION_NAME}.mybluemix.net
 
 * `ffmpeg` reports error that "audio codec libopus is not available"
 
-Ensure that the codec `libopus` is included in the version of `ffmpeg` that you install. To check this, make sure it is listed using this command:
+  > Ensure that the codec `libopus` is included in the version of `ffmpeg` that you install. To check this, make sure it is listed using this command:
 
 ```
 ffmpeg -encoders | grep opus
@@ -294,16 +294,16 @@ ffmpeg -encoders | grep opus
 
 * `ffprobe` reports error
 
-Ensure you are on at least version 3.3.1
+  > Ensure you are on at least version 3.3.1
 
 * Enrichment does not complete or reports errors
 
-Note that there are several Bluemix trial version limitations that you may run into if you attempt to enrich multiple OR large mp4 files. 
+  > Note that there are several Bluemix trial version limitations that you may run into if you attempt to enrich multiple OR large mp4 files. 
 
-Watson Tone Analyzer - max of 2500 API calls.<br> 
+  > Watson Tone Analyzer - max of 2500 API calls.<br> 
 Solution - delete and create new service instance
 
-Watson Visual Recognition - max of 250 API calls per day.<br>
+  > Watson Visual Recognition - max of 250 API calls per day.<br>
 Solution - wait 24 hours to run again.
 
 # License
