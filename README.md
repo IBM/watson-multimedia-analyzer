@@ -35,7 +35,7 @@ Want to take your Watson app to the next level? Looking to leverage Watson Brand
 
 # Watch the Video
 
-!! COMING SOON
+[![](http://img.youtube.com/vi/nTzrA56zLTE/0.jpg)](https://www.youtube.com/watch?v=nTzrA56zLTE)
 
 # Steps
 
