@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node app.js | node_modules/.bin/pino ",
     "test": "mocha",
-    "lint": "eslint *.js lib test"
+    "lint": "eslint *.js lib e2etest"
   },
   "dependencies": {
     "archiver": "^1.3.0",
