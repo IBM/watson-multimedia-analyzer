@@ -28,15 +28,16 @@ const bodyParser = require('body-parser');
 const cfenv = require('cfenv');
 const auth = require('basic-auth');
 const pino = require('express-pino-logger')();
+const path = require('path');
+const fs = require('fs');
 
 pino.level = 'error';
 require('dotenv').load({ silent: true });
 
 const enrich = require('./lib/enricher').enrich;
-const enrich_tone = require('./lib/enricher').enrich_tone;
+const enrichTone = require('./lib/enricher').enrich_tone;
 const cDB = require('./lib/database');
 const statusDB = require('./lib/statusdb');
-const vmnSocial = require('./lib/query/vmn-social');
 
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
@@ -68,7 +69,7 @@ app.use((req, res, next) => {
 app.use(express.static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
-  if (req.method == 'OPTIONS') {
+  if (req.method === 'OPTIONS') {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
@@ -91,30 +92,14 @@ app.post('/login', urlencodedParser, (req, res) => {
   if (!req.body) return res.sendStatus(400);
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-  res.send('welcome');
+  return res.send('welcome');
 });
 
 
 app.get('/media_files/:name', (req, res) => {
   req.log.info('media_files requested: ', req.params.name);
-/*
-   var options = {
-    root: __dirname + '/public/media_files',
-    dotfiles: 'deny',
-    headers: {
-        'x-timestamp': Date.now(),
-        'x-sent': true
-    }
-  };
-   res.sendFile(req.params.name, options, function(err) {
-     if (err) {
-       next(err);
-     } else {
-       console.log('Sent: ', req.params.name);
-     }
-   })
-*/
   const file = path.resolve(`${__dirname}/public/media_files/${req.params.name}`);
+  // eslint-disable-next-line consistent-return
   fs.stat(file, (err, stats) => {
     if (err) {
       if (err.code === 'ENOENT') {
@@ -142,11 +127,11 @@ app.get('/media_files/:name', (req, res) => {
       'Content-Type': 'video/mp4',
     });
 
-    var stream = fs.createReadStream(file, { start: start, end: end })
+    const stream = fs.createReadStream(file, { start: start, end: end })
         .on('open', () => {
           stream.pipe(res);
-        }).on('error', (err) => {
-          res.end(err);
+        }).on('error', (error) => {
+          res.end(error);
         });
   });
 });
@@ -164,7 +149,8 @@ app.get('/media_files/:name', (req, res) => {
 //
 //
 // POST /api/enrich gets JSON bodies
-app.post('/api/enrich_tone', jsonParser, (req, res) => {
+// eslint-disable-next-line consistent-return
+app.post('/api/enrichTone', jsonParser, (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
 //  console.log('Request is:  ', req);
 //  res.header("Access-Control-Allow-Headers", "X-Requested-With content-type");
@@ -174,7 +160,7 @@ app.post('/api/enrich_tone', jsonParser, (req, res) => {
   }
   // process the req.body and pass through enrichment.
   req.log.trace('Enrichment Request Started', req.body);
-  enrich_tone(req.body)
+  enrichTone(req.body)
     .then((results) => {
 //      console.log(results);
       res.json(results);
@@ -188,6 +174,7 @@ app.post('/api/enrich_tone', jsonParser, (req, res) => {
 });
 
 // POST /api/enrich gets JSON bodies
+// eslint-disable-next-line consistent-return
 app.post('/api/enrich', jsonParser, (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
 //  console.log('Request is:  ', req);
@@ -211,6 +198,7 @@ app.post('/api/enrich', jsonParser, (req, res) => {
     });
 });
 
+// eslint-disable-next-line consistent-return
 app.post('/api/query', jsonParser, (req, res) => {
   if (!req.body || Object.keys(req.body).length === 0) {
     req.log.info('No BODY present -- 400');
@@ -230,6 +218,7 @@ app.post('/api/query', jsonParser, (req, res) => {
  */
 const mediaProcessor = require('./lib/mediaprocessor');
 
+// eslint-disable-next-line consistent-return
 app.post('/api/mediaprocessor', jsonParser, (req, res) => {
   req.log.trace(req.body);
   res.header('Access-Control-Allow-Origin', '*');
@@ -272,9 +261,9 @@ app.get('/api/media', jsonParser, (req, res) => {
 
 app.get('/api/episode/:episode_id', jsonParser, (req, res) => {
   req.log.debug(`...${req.params.episode_id}...`);
-  const ep_id = req.params.episode_id.replace(/___/g, ':');
-  req.log.debug(`...Looking up... ${ep_id}...`);
-  cDB.loadDocument(ep_id, (error, response) => {
+  const epId = req.params.episode_id.replace(/___/g, ':');
+  req.log.debug(`...Looking up... ${epId}...`);
+  cDB.loadDocument(epId, (error, response) => {
     // Send the response
     if (error) {
       // failed
@@ -300,7 +289,7 @@ app.get('/api/episodes', jsonParser, (req, res) => {
 });
 
 app.get('/api/segments:episode_id', jsonParser, (req, res) => {
-  cDB.getEpisodeSegments(req.params.episode_id, (response) => {
+  cDB.getEpisodeSegments(req.params.episode_id, (response, error) => {
     // Send the response
     if (error) {
       // failed
@@ -426,6 +415,7 @@ app.get('/api/searches', jsonParser, (req, res) => {
   });
 });
 
+// eslint-disable-next-line consistent-return
 app.post('/api/save_search', jsonParser, (req, res) => {
   if (!req.body || Object.keys(req.body).length === 0) {
     req.log.info('No BODY present -- 400');
@@ -443,41 +433,4 @@ app.post('/api/save_search', jsonParser, (req, res) => {
   });
 });
 
-app.get('/api/wolfMoon', jsonParser, (req, res) => {
-  vmnSocial.getWolfMoonSocial((error, response) => {
-    // Send the response
-    if (error) {
-      // failed
-      console.error('error!', error);
-    } else {
-      console.log('Response!', response);
-      res.json(response);
-    }
-  });
-});
-
-app.get('/api/lieAbility', jsonParser, (req, res) => {
-  vmnSocial.getLieAbilitySocial((error, response) => {
-    // Send the response
-    if (error) {
-      // failed
-      console.error('error!', error);
-    } else {
-      console.log('Response!', response);
-      res.json(response);
-    }
-  });
-});
-app.get('/api/riddled', jsonParser, (req, res) => {
-  vmnSocial.getRiddledSocial((error, response) => {
-    // Send the response
-    if (error) {
-      // failed
-      console.error('error!', error);
-    } else {
-      console.log('Response!', response);
-      res.json(response);
-    }
-  });
-});
 module.exports = app;
