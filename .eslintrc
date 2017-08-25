@@ -5,12 +5,16 @@
     // My Overrides!
     "import/core-modules": [ "process" ],
     "env": {
-        "mocha": true
+        "mocha": true,
+				"es6": true,
+				"node": true
       },
     "rules": {
+			"no-console": 0,
       "no-underscore-dangle": 0,
       "no-prototype-builtins": 0,
       "quote-props":0,
+      "no-plusplus":0,
       "object-shorthand": 0,
       "strict": 1,
       "no-param-reassign": 1,
