@@ -3,7 +3,7 @@
 
 # Using IBM Watson to enrich audio and visual files.
 
-In this developer journey we will use Watson services to showcase how media (both audio and video) can be enriched on a timeline basis. 
+In this developer journey we will use Watson services to showcase how media (both audio and video) can be enriched on a timeline basis. Credit goes to [Scott Graham](https://github.com/swgraham) for providing the initial notebook design.
 
 ![](doc/source/images/architecture.png)
 
@@ -20,6 +20,10 @@ In this developer journey we will use Watson services to showcase how media (bot
 ## With Watson
 
 Want to take your Watson app to the next level? Looking to leverage Watson Brand assets? Join the [With Watson](https://www.ibm.com/watson/with-watson) program which provides exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
+
+## Watson Accelerators
+
+Visit the [Watson Accelerators](http://www.watsonaccelerators.com) portal to see more live patterns in action.
 
 ## Included components
 
