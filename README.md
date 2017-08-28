@@ -3,7 +3,7 @@
 
 # Using IBM Watson to enrich audio and visual files.
 
-In this developer journey we will use Watson services to showcase how media (both audio and video) can be enriched on a timeline basis. Credit goes to [Scott Graham](https://github.com/swgraham) for providing the initial notebook design.
+In this developer journey we will use Watson services to showcase how media (both audio and video) can be enriched on a timeline basis. Credit goes to [Scott Graham](https://github.com/swgraham) for providing the initial application.
 
 ![](doc/source/images/architecture.png)
 
