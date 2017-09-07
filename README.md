@@ -184,6 +184,17 @@ To enrich media files, they need to be processed by the `processMedia` function.
 For encoding Speech-to-Text (STT) and Visual Recognition (VR) from the command
 line, you need to install [`ffmpeg` and `ffprobe`](https://ffmpeg.org/download.html).
 
+```
+# Install ffmpeg with the libopus audio codex enabled
+# On OSX
+$ brew install ffmpeg --with-opus
+$ npm install node-ffprobe
+
+# On Ubuntu
+$ sudo apt-get install ffmpeg --with-opus
+$ npm install node-ffprobe
+```
+
 Enrichment is initiated via the command line using `bin/processMedia`.  The usage for the command is as follows:
 
 ```
@@ -290,7 +301,7 @@ http:\\{BLUEMIX_APPLICATION_NAME}.mybluemix.net
 
 * `ffmpeg` reports error that "audio codec libopus is not available"
 
-  > Ensure that the codec `libopus` is included in the version of `ffmpeg` that you install. To check this, make sure it is listed using this command:
+  > Ensure that the audio codec `libopus` is included in the version of `ffmpeg` that you install. To check this, make sure it is listed using this command:
 
 ```
 ffmpeg -encoders | grep opus
