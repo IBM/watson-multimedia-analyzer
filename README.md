@@ -102,7 +102,7 @@ npm install
 bower install
 ```
 
-### 3. Configure credentials
+## 3. Configure credentials
 
 The credentials for Bluemix services (Visual Recognition, Speech to Text, Tone Analyzer, Natural Language Understanding, and Cloudant NoSQL DB), can be found in the ``Services`` menu in Bluemix,
 by selecting the ``Service Credentials`` option for each service.
@@ -151,7 +151,7 @@ NATURAL_LANGUAGE_UNDERSTANDING_USERNAME=<add_nlu_username>
 NATURAL_LANGUAGE_UNDERSTANDING_PASSWORD=<add_nlu_password>
 ```
 
-### 4. Run application
+## 4. Run application
 
 ```
 npm start
@@ -177,7 +177,7 @@ server starting on http://localhost:6007
 ```
 *  UI will be available where indicated (in this example: http://localhost:6007/)
 
-### 5. Enrich multimedia files
+## 5. Enrich multimedia files
 
 To enrich media files, they need to be processed by the `processMedia` function.
 
@@ -263,7 +263,7 @@ Save this file as a new name somewhere (like `feeds`):
 bin/processMedia -V -x feeds/new_feed.xml
 ```
 
-### 6. View results in UI
+## 6. View results in UI
 
 Point your browser to the URL specified when the server was started. For example:
 
