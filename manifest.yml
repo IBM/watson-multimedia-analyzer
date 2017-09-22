@@ -1,3 +1,4 @@
+---
 declared-services:
   wma-visual-recognition:
     label: watson_vision_combined
