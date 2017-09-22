@@ -35,7 +35,7 @@
   },
   "repository": {},
   "engines": {
-    "node": "4.x"
+    "node": ">=7"
   },
   "devDependencies": {
     "chai": "^3.5.0",
