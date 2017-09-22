@@ -25,6 +25,9 @@
 // for more info, see: http://expressjs.com
 const express = require('express');
 const bodyParser = require('body-parser');
+
+// cfenv provides access to your Cloud Foundry environment
+// for more info, see: https://www.npmjs.com/package/cfenv
 const cfenv = require('cfenv');
 const auth = require('basic-auth');
 const pino = require('express-pino-logger')();
@@ -33,16 +36,12 @@ const fs = require('fs');
 
 pino.level = 'error';
 require('dotenv').load({ silent: true });
+require('cf-deployment-tracker-client').track();
 
 const enrich = require('./lib/enricher').enrich;
 const enrichTone = require('./lib/enricher').enrich_tone;
 const cDB = require('./lib/database');
 const statusDB = require('./lib/statusdb');
-
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
-
-require('cf-deployment-tracker-client').track();
 
 // create a new express server
 const app = express();
