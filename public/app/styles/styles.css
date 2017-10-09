@@ -1,6 +1,6 @@
 /* CSS Project */
- @import "../../bower_components/wa-icons/dist/css/wa-icons.css";
- @import "../../bower_components/wa-icons/dist/css/design-icons.css";
+ @import "./wa-icons.css";
+ @import "./design-icons.css";
 
 .grid-item {
     width: 390px;
