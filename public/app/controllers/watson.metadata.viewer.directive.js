@@ -31,7 +31,7 @@ function watsonMetadataViewer() {
     link: link,
     templateUrl: 'app/views/metadata.html',
     controller: MetadataController,
-    scope: { 
+    scope: {
       moment : '=',
       watsonMetadata: '='
     },
@@ -49,7 +49,7 @@ function watsonMetadataViewer() {
 
      });
     */
-    console.log('watsonMetadataViewer:', scope ); 
+    console.log('watsonMetadataViewer:', scope );
   }
 }
 

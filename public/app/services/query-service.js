@@ -124,7 +124,7 @@
           if (response.data && response.data.rows && response.data.rows.length > 0) {
             // Just return doc
             callback(null, response.data.rows.map((s) => { return s.doc }));
-          } 
+          }
         }).catch(function errorCallback(error) {
           console.error('Init failed: ', error);
           callback(null);
