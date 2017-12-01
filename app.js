@@ -18,7 +18,7 @@
 
 
 //------------------------------------------------------------------------------
-// node.js starter application for Bluemix
+// node.js starter application for IBM Cloud
 //------------------------------------------------------------------------------
 
 // This application uses express as its web server
