@@ -31,7 +31,7 @@ function watsonExternalSources() {
     link: link,
     templateUrl: 'app/views/external_sources.html',
     controller: ExternalSourcesController,
-    scope: { 
+    scope: {
       external: '='
     },
     controllerAs: 'vm',

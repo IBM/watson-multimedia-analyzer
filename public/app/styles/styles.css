@@ -77,39 +77,39 @@
     margin-top:3px;
     position:relative;
     float:left;
-} 
+}
 .hosp .ct-series-a .ct-slice-donut {
-  stroke: #6042A5; 
+  stroke: #6042A5;
 }
 .hosp .ct-series-b .ct-slice-donut {
   stroke: #C2A9FC;
 }
 .trans .ct-series-a .ct-slice-donut {
-  stroke: #2196F3; 
+  stroke: #2196F3;
 }
 .trans .ct-series-b .ct-slice-donut {
   stroke: #CAE4F7
-}    
+}
 .cult .ct-series-a .ct-slice-donut {
-  stroke: #FF5722; 
+  stroke: #FF5722;
 }
 .cult .ct-series-b .ct-slice-donut {
   stroke: #FCCCBD;
-}   
+}
 .fin .ct-series-a .ct-slice-donut {
-  stroke: #4CAF50; 
+  stroke: #4CAF50;
 }
 .fin .ct-series-b .ct-slice-donut {
   stroke: #B6EDB8;
-} 
+}
 .mon .ct-series-a .ct-slice-donut {
-  stroke: #E91E63; 
+  stroke: #E91E63;
 }
 .mon .ct-series-b .ct-slice-donut {
   stroke: #EAB2C5;
-} 
+}
 .scr .ct-series-a .ct-slice-donut {
-  stroke: #009688; 
+  stroke: #009688;
 }
 .scr .ct-series-b .ct-slice-donut {
   stroke: #84D6CE;
@@ -167,7 +167,7 @@
   border-width:1px;
   border-color:gray;
   color:#3873DD;
-} 
+}
 .modal-dialog{
     margin-top:120px;
     width:1000px;
@@ -179,7 +179,7 @@
 .modal-header{
     padding-bottom:0px;
     padding-top:4px;
-}        
+}
 .modalBox{
     color:white;
     background-color:#0b4e82;
@@ -197,7 +197,7 @@
     padding-left:30px;
 }
 table.fixed { table-layout:fixed; }
-table.fixed td { overflow: hidden; } 
+table.fixed td { overflow: hidden; }
 
 #sidebar {
     background-color:#E0E0E0;

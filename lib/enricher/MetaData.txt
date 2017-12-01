@@ -1,7 +1,7 @@
 'use strict';
 
 /*
- * Media Data Header --> Pull in any data STORED in the media already.  
+ * Media Data Header --> Pull in any data STORED in the media already.
  *    >> Add a 'tags' field to this at the root that we update consistenty?
  *
  *    The challenge/interesting thing of Text relevant to processing media is that you will have a 'Speaker' and you will have context associated w/ the speech happening (but may be in Video)
@@ -16,9 +16,9 @@
  *    Keywords: (Get them at end, then tag where they occurred and dig deeper at that video)
  *
  *    Concept Tagging:
- *       -->  This has the feel that we need 'Concept Tagging' at windows of text and for the whole text -- like you can know what's going on every 5 minutes of aggregated text but also for the whole audio segment. 
+ *       -->  This has the feel that we need 'Concept Tagging' at windows of text and for the whole text -- like you can know what's going on every 5 minutes of aggregated text but also for the whole audio segment.
  *
- *    
+ *
  *
  *    Relation:  ...
  *
@@ -54,13 +54,13 @@
  *   },
  * }
  *
- * Q : Add metadata from Closed Caption... 
- *  Q: Language(?) 
+ * Q : Add metadata from Closed Caption...
+ *  Q: Language(?)
  *
- * Q(swami):  How do we find similar videos... 
+ * Q(swami):  How do we find similar videos...
  *
  * Q:  Filter based on relevance of reuslts as well?
- * 
+ *
  * Should Cleanup the data:  If a words confidence is low, should we drop it? Should we use alternatives?
  *
  *

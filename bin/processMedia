@@ -1,4 +1,4 @@
-#! /usr/bin/env node 
+#! /usr/bin/env node
 
 var ascii = "Watson Media Processor CLI";
 console.log(ascii);
@@ -8,5 +8,5 @@ require("../lib/cli")(process.argv, function(err) {
     process.exit(1);
   } else {
     process.exit(0);
-  } 
+  }
 });

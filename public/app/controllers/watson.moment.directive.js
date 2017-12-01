@@ -56,7 +56,7 @@ function watsonMomentViewer() {
   MomentController.$inject = ['$rootScope', '$log'];
   function MomentController($rootScope, $log) {
      var vm = this;
-  
+
      vm.transcriptWordCount = function() {
        var count = 0;
        if (vm.watsonMetadata&& vm.watsonMetadata.transcript) {

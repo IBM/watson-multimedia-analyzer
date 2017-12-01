@@ -45,7 +45,7 @@ Visit the [Watson Accelerators](http://www.watsonaccelerators.com) portal to see
 
 This journey contains multiple apps - the app server which communicates with the Watson services and renders the UI, and the process media app which enriches multimedia files. Both of these need to be run locally to enrich media files. Once media files are enriched, the app server can be deployed to IBM Cloud so that the UI can be run remotely.
 
-> NOTE: To enrich multimedia files, both the app server and enrichment process must be run locally. 
+> NOTE: To enrich multimedia files, both the app server and enrichment process must be run locally.
 
 For convenience, we recommend that you use the ``Deploy to IBM Cloud`` button to initially create the Watson services and deploy the Watson Multimedia Analyzer application. Using this feature will provide the following benefits:
 * All Watson services are automatically created and associated with the deployed app.
@@ -89,7 +89,7 @@ Clone the `watson-multimedia-analyzer` locally. In a terminal, run:
 
 Use this [link](https://nodejs.org/en/download/) to download and install node.js and npm to your local system.
 
-Install the Bower package manager: 
+Install the Bower package manager:
 
 ```
 npm install -g bower
@@ -269,15 +269,15 @@ Point your browser to the URL specified when the server was started. For example
 
 `http://localhost:6007/`
 
-Username and password are defined by the object `users` in [`app.js`](app.js). The default username/password credentials are `enrich`/`enrichit`. 
+Username and password are defined by the object `users` in [`app.js`](app.js). The default username/password credentials are `enrich`/`enrichit`.
 
 Note that the default credentials must NOT be removed. You can, however, add additional credentials.
 
 ### Re-Deploy the Application to IBM Cloud
-After you have enriched your media files, you can re-deploy the application to IBM Cloud so that you can view the UI remotely. 
+After you have enriched your media files, you can re-deploy the application to IBM Cloud so that you can view the UI remotely.
 
 * Download and install the [Cloud Foundry CLI](https://console.ng.bluemix.net/docs/cli/index.html#cli) tool.
-* Determine the IBM Cloud application name from the Bluemix application dashboard. The name will be ``watson-multimedia-analyzer`` with a unique suffix. 
+* Determine the IBM Cloud application name from the Bluemix application dashboard. The name will be ``watson-multimedia-analyzer`` with a unique suffix.
 * From the root directory of this project run the following command:
 
 ```
@@ -313,9 +313,9 @@ ffmpeg -encoders | grep opus
 
 * Enrichment does not complete or reports errors
 
-  > Note that there are several IBM Cloud trial version limitations that you may run into if you attempt to enrich multiple OR large mp4 files. 
+  > Note that there are several IBM Cloud trial version limitations that you may run into if you attempt to enrich multiple OR large mp4 files.
 
-  > Watson Tone Analyzer - max of 2500 API calls.<br> 
+  > Watson Tone Analyzer - max of 2500 API calls.<br>
 Solution - delete and create new service instance
 
   > Watson Visual Recognition - max of 250 API calls per day.<br>
