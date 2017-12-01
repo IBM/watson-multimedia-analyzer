@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/IBM/watson-multimedia-analyzer.svg?branch=master)](https://travis-ci.org/IBM/watson-multimedia-analyzer)
-![Bluemix Deployments](https://metrics-tracker.mybluemix.net/stats/f2eba8d669a9ca524414f940ecb3e8aa/badge.svg)
+![IBM Cloud Deployments](https://metrics-tracker.mybluemix.net/stats/f2eba8d669a9ca524414f940ecb3e8aa/badge.svg)
 
 # Using IBM Watson to enrich audio and visual files.
 
@@ -27,7 +27,7 @@ Visit the [Watson Accelerators](http://www.watsonaccelerators.com) portal to see
 
 ## Included components
 
-* [Watson Natural Language Understanding](https://www.ibm.com/watson/developercloud/natural-language-understanding.html): A Bluemix service that can analyze text to extract meta-data from content such as concepts, entities, keywords, categories, sentiment, emotion, relations, semantic roles, using natural language understanding.
+* [Watson Natural Language Understanding](https://www.ibm.com/watson/developercloud/natural-language-understanding.html): A IBM Cloud service that can analyze text to extract meta-data from content such as concepts, entities, keywords, categories, sentiment, emotion, relations, semantic roles, using natural language understanding.
 * [Watson Speech-to-Text](https://www.ibm.com/watson/developercloud/speech-to-text.html): A service that converts human voice into written text.
 * [Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/tone-analyzer.html): Uses linguistic analysis to detect communication tones in written text.
 * [Watson Visual Recognition](https://www.ibm.com/watson/developercloud/visual-recognition.html): Visual Recognition understands the contents of images - visual concepts tag the image, find human faces, approximate age and gender, and find similar images in a collection.
@@ -43,32 +43,32 @@ Visit the [Watson Accelerators](http://www.watsonaccelerators.com) portal to see
 
 # Steps
 
-This journey contains multiple apps - the app server which communicates with the Watson services and renders the UI, and the process media app which enriches multimedia files. Both of these need to be run locally to enrich media files. Once media files are enriched, the app server can be deployed to Bluemix so that the UI can be run remotely.
+This journey contains multiple apps - the app server which communicates with the Watson services and renders the UI, and the process media app which enriches multimedia files. Both of these need to be run locally to enrich media files. Once media files are enriched, the app server can be deployed to IBM Cloud so that the UI can be run remotely.
 
 > NOTE: To enrich multimedia files, both the app server and enrichment process must be run locally.
 
-For convenience, we recommend that you use the ``Deploy to Bluemix`` button to initially create the Watson services and deploy the Watson Multimedia Analyzer application. Using this feature will provide the following benefits:
+For convenience, we recommend that you use the ``Deploy to IBM Cloud`` button to initially create the Watson services and deploy the Watson Multimedia Analyzer application. Using this feature will provide the following benefits:
 * All Watson services are automatically created and associated with the deployed app.
 * Watson service credentials will be centrally located and easily accessible.
 * Once you have completed this journey, all of the Watson services can be automatically deleted along with deployed app.
 
-## Deploy to Bluemix
-[![Deploy to Bluemix](https://metrics-tracker.mybluemix.net/stats/f2eba8d669a9ca524414f940ecb3e8aa/button.svg)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-multimedia-analyzer.git)
+## Deploy to IBM Cloud
+[![Deploy to IBM Cloud](https://metrics-tracker.mybluemix.net/stats/f2eba8d669a9ca524414f940ecb3e8aa/button.svg)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-multimedia-analyzer.git)
 
-1. Press the above ``Deploy to Bluemix`` button and then click on ``Deploy``.
+1. Press the above ``Deploy to IBM Cloud`` button and then click on ``Deploy``.
 
 2. In Toolchains, click on Delivery Pipeline to watch while the app is deployed. Once deployed, the app can be viewed by clicking 'View app'.
 
 ![](doc/source/images/toolchain-pipeline.png)
 
-3. To see the app and services created and configured for this journey, use the Bluemix dashboard. The app is named `watson-multimedia-analyzer` with a unique suffix. The following services are created and easily identified by the `wma-` prefix:
+3. To see the app and services created and configured for this journey, use the IBM Cloud dashboard. The app is named `watson-multimedia-analyzer` with a unique suffix. The following services are created and easily identified by the `wma-` prefix:
     * wma-natural-language-understanding
     * wma-speech-to-text
     * wma-tone-analyzer
     * wma-visual-recognition
     * wma-cloudant
 
-> Note: Even though the `watson-mulitmedia-analyzer` has been deployed to Bluemix and can be accessed remotely, it will not display correctly until the following steps are completed.
+> Note: Even though the `watson-mulitmedia-analyzer` has been deployed to IBM Cloud and can be accessed remotely, it will not display correctly until the following steps are completed.
 
 1. [Clone the repo](#1-clone-the-repo)
 2. [Configure the Watson Multimedia Analzer application](#2-configure-the-watson-multimedia-analzer-application)
@@ -104,10 +104,10 @@ bower install
 
 ## 3. Configure credentials
 
-The credentials for Bluemix services (Visual Recognition, Speech to Text, Tone Analyzer, Natural Language Understanding, and Cloudant NoSQL DB), can be found in the ``Services`` menu in Bluemix,
+The credentials for IBM Cloud services (Visual Recognition, Speech to Text, Tone Analyzer, Natural Language Understanding, and Cloudant NoSQL DB), can be found in the ``Services`` menu in Bluemix,
 by selecting the ``Service Credentials`` option for each service.
 
-Or, all of the credentials can be conveniently accessed by visiting the `Connections` Bluemix panel for the deployed app.
+Or, all of the credentials can be conveniently accessed by visiting the `Connections` IBM Cloud panel for the deployed app.
 
 ![](doc/source/images/credentials-list.png)
 
@@ -273,25 +273,25 @@ Username and password are defined by the object `users` in [`app.js`](app.js). T
 
 Note that the default credentials must NOT be removed. You can, however, add additional credentials.
 
-### Re-Deploy the Application to Bluemix
-After you have enriched your media files, you can re-deploy the application to Bluemix so that you can view the UI remotely.
+### Re-Deploy the Application to IBM Cloud
+After you have enriched your media files, you can re-deploy the application to IBM Cloud so that you can view the UI remotely.
 
 * Download and install the [Cloud Foundry CLI](https://console.ng.bluemix.net/docs/cli/index.html#cli) tool.
-* Determine the Bluemix application name from the Bluemix application dashboard. The name will be ``watson-multimedia-analyzer`` with a unique suffix.
+* Determine the IBM Cloud application name from the Bluemix application dashboard. The name will be ``watson-multimedia-analyzer`` with a unique suffix.
 * From the root directory of this project run the following command:
 
 ```
 cf push {BLUEMIX_APPLICATION_NAME}
 ```
 
-* You should see a lot of activity as the application is deployed to Bluemix. At the end of the activity, the application should be 'Starter'.
+* You should see a lot of activity as the application is deployed to IBM Cloud. At the end of the activity, the application should be 'Starter'.
 * Access the application using the following url:
 ```
 http:\\{BLUEMIX_APPLICATION_NAME}.mybluemix.net
 ```
 * When prompted for a username and password, use the credentials stored in [`app.js`](app.js). The default username/password credentials are  `enrich`/`enrichit`.
 
-> Note: If you enrich additional media files with Visual Recognition, you will need to re-deploy the application to Bluemix to view the new content.
+> Note: If you enrich additional media files with Visual Recognition, you will need to re-deploy the application to IBM Cloud to view the new content.
 
 # Sample Output
 
@@ -313,7 +313,7 @@ ffmpeg -encoders | grep opus
 
 * Enrichment does not complete or reports errors
 
-  > Note that there are several Bluemix trial version limitations that you may run into if you attempt to enrich multiple OR large mp4 files.
+  > Note that there are several IBM Cloud trial version limitations that you may run into if you attempt to enrich multiple OR large mp4 files.
 
   > Watson Tone Analyzer - max of 2500 API calls.<br>
 Solution - delete and create new service instance
@@ -327,7 +327,7 @@ Solution - wait 24 hours to run again.
 
 # Privacy Notice
 
-If using the Deploy to Bluemix button some metrics are tracked, the following
+If using the Deploy to IBM Cloud button some metrics are tracked, the following
 information is sent to a [Deployment Tracker](https://github.com/IBM/metrics-collector-service) service
 on each deployment:
 
@@ -343,8 +343,8 @@ on each deployment:
 * Number of instances for each bound service and associated plan information
 
 This data is collected from the `package.json` and `repository.yaml` file in the sample application and the ``VCAP_APPLICATION``
-and ``VCAP_SERVICES`` environment variables in IBM Bluemix and other Cloud Foundry platforms. This
-data is used by IBM to track metrics around deployments of sample applications to IBM Bluemix to
+and ``VCAP_SERVICES`` environment variables in IBM Cloud and other Cloud Foundry platforms. This
+data is used by IBM to track metrics around deployments of sample applications to IBM Cloud to
 measure the usefulness of our examples, so that we can continuously improve the content we offer
 to you. Only deployments of sample applications that include code to ping the Deployment Tracker
 service will be tracked.
