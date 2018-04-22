@@ -10,7 +10,7 @@ In this developer journey we will use Watson services to showcase how media (bot
 ## Flow
 
 1. Media file is passed into the `Media Processor` enrichment process.
-2. The Watson Speech to Text Service tranlates audio to text. The text is broken up into scenes, based on a timer, a change in speaker, or a significant pause in speech.
+2. The Watson Speech to Text Service translates audio to text. The text is broken up into scenes, based on a timer, a change in speaker, or a significant pause in speech.
 3. The Watson Natural Language Understanding Service pulls out keywords, entities, concepts, and taxonomy for each scene.
 4. The Watson Tone Analyzer Service extracts top emotions, social and writing tones for each scene.
 5. The Watson Visual Recognition Service takes a screen capture every 10 seconds and creats a 'moment'. Classifications, faces and words are extracted from each screen shot.
@@ -57,7 +57,7 @@ For convenience, we recommend that you use the ``Deploy to IBM Cloud`` button to
 
 1. Press the above ``Deploy to IBM Cloud`` button and then click on ``Deploy``.
 
-2. In Toolchains, click on Delivery Pipeline to watch while the app is deployed. Once deployed, the app can be viewed by clicking 'View app'.
+2. In Toolchains, click on ``Delivery Pipeline`` to watch while the app is deployed. Once deployed, the app can be viewed by clicking 'View app'.
 
 ![](doc/source/images/toolchain-pipeline.png)
 
@@ -75,7 +75,7 @@ For convenience, we recommend that you use the ``Deploy to IBM Cloud`` button to
 3. [Configure credentials](#3-configure-credentials)
 4. [Run application](#4-run-application)
 5. [Enrich multimedia files](#5-enrich-multimedia-files)
-6. [View resullts in UI](#6-view-results-in-ui)
+6. [View results in UI](#6-view-results-in-ui)
 
 ## 1. Clone the repo
 
@@ -216,7 +216,7 @@ Options:
 -x, --xml-file filename XML URI or filename
 ```
 
-*Note:* Using Visual Recognition will take significantly longer. It is worth testing your setup without using the -V option. Once the -S option or the subtitles are correctly determined, add the -V option. There is a limitation on your VR account (250 images/day), so proceed with caution.
+*Note:* Using Visual Recognition will take significantly longer. It is worth testing your setup without using the ``-V`` option. Once the ``-S`` option or the subtitles are correctly determined, add the ``-V`` option. There is a limitation on your VR account (250 images/day), so proceed with caution.
 
 ### Enrich a local MP4/WAV file (Using STT)
 
@@ -327,7 +327,7 @@ Solution - wait 24 hours to run again.
 
 # Privacy Notice
 
-If using the Deploy to IBM Cloud button some metrics are tracked, the following
+If using the ``Deploy to IBM Cloud`` button some metrics are tracked, the following
 information is sent to a [Deployment Tracker](https://github.com/IBM/metrics-collector-service) service
 on each deployment:
 
