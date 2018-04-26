@@ -12,7 +12,7 @@
     "basic-auth": "^1.0.4",
     "body-parser": "^1.15.2",
     "cfenv": "1.0.x",
-    "cloudant": "^1.4.3",
+    "@cloudant/cloudant": "^1.4.3",
     "commander": "^2.9.0",
     "connect-multiparty": "2.0.x",
     "dotenv": "^4.0.0",
