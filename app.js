@@ -36,7 +36,6 @@ const fs = require('fs');
 
 pino.level = 'error';
 require('dotenv').load({ silent: true });
-require('metrics-tracker-client').track();
 
 const enrich = require('./lib/enricher').enrich;
 const enrichTone = require('./lib/enricher').enrich_tone;
