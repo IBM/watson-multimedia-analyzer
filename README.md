@@ -16,10 +16,6 @@ In this developer journey we will use Watson services to showcase how media (bot
 6. All scenes and 'moments' are stored in the Watson Cloudant NoSQL DB.
 7. The app UI displays stored scenes and 'moments'.
 
-## With Watson
-
-Want to take your Watson app to the next level? Looking to leverage Watson Brand assets? Join the [With Watson](https://www.ibm.com/watson/with-watson) program which provides exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
-
 ## Watson Accelerators
 
 Visit the [Watson Accelerators](http://www.watsonaccelerators.com) portal to see more live patterns in action.
@@ -52,7 +48,7 @@ For convenience, we recommend that you use the ``Deploy to IBM Cloud`` button to
 * Once you have completed this journey, all of the Watson services can be automatically deleted along with deployed app.
 
 ## Deploy to IBM Cloud
-[![Deploy to IBM Cloud](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-multimedia-analyzer.git)
+[![Deploy to IBM Cloud](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-multimedia-analyzer)
 
 1. Press the above ``Deploy to IBM Cloud`` button and then click on ``Deploy``.
 
@@ -186,12 +182,12 @@ line, you need to install [`ffmpeg` and `ffprobe`](https://ffmpeg.org/download.h
 ```
 # Install ffmpeg with the libopus audio codex enabled
 # On OSX
-$ brew install ffmpeg --with-opus
-$ npm install node-ffprobe
+brew install ffmpeg --with-opus
+npm install node-ffprobe
 
 # On Ubuntu
-$ sudo apt-get install ffmpeg --with-opus
-$ npm install node-ffprobe
+sudo apt-get install ffmpeg --with-opus
+npm install node-ffprobe
 ```
 
 Enrichment is initiated via the command line using `bin/processMedia`.  The usage for the command is as follows:
@@ -272,18 +268,20 @@ Username and password are defined by the object `users` in [`app.js`](app.js). T
 
 Note that the default credentials must NOT be removed. You can, however, add additional credentials.
 
-### Re-Deploy the Application to IBM Cloud
-After you have enriched your media files, you can re-deploy the application to IBM Cloud so that you can view the UI remotely.
+### Deploy the Application to IBM Cloud
+After you have enriched your media files, you can deploy the application to IBM Cloud so that you can view the UI remotely.
+
+> Note: If you already have the application deployed, you will either need to delete it (take care not to also delete any assoicated services at the same time), or modify the `manifest.yml` to change the name of the application. The default name is `watson-multimedia-analyzer`.
 
 * Download and install the [Cloud Foundry CLI](https://console.ng.bluemix.net/docs/cli/index.html#cli) tool.
-* Determine the IBM Cloud application name from the Bluemix application dashboard. The name will be ``watson-multimedia-analyzer`` with a unique suffix.
+* Login to the Cloud Foundry service.
 * From the root directory of this project run the following command:
 
 ```
-cf push {BLUEMIX_APPLICATION_NAME}
+cf push
 ```
 
-* You should see a lot of activity as the application is deployed to IBM Cloud. At the end of the activity, the application should be 'Starter'.
+* You should see a lot of activity as the application is deployed to IBM Cloud. At the end of the activity, the application should be 'Running'.
 * Access the application using the following url:
 ```
 http:\\{BLUEMIX_APPLICATION_NAME}.mybluemix.net
@@ -320,6 +318,18 @@ Solution - delete and create new service instance
   > Watson Visual Recognition - max of 250 API calls per day.<br>
 Solution - wait 24 hours to run again.
 
-# License
+# Links
+* [Demo on Youtube](https://www.youtube.com/watch?v=nTzrA56zLTE)
+* [Watson Natural Language Understanding](https://www.ibm.com/watson/services/natural-language-understanding/)
+* [Watson Speech-to-Text](https://www.ibm.com/watson/services/speech-to-text/)
+* [Watson Tone Analyzer](https://www.ibm.com/watson/services/tone-analyzer/)
+* [Watson Visual Recognition](https://www.ibm.com/watson/services/visual-recognition/)
+* [IBM Cloudant db](https://www.ibm.com/cloud/cloudant)
 
+# Learn more
+* **Artificial Intelligence Code Patterns**: Enjoyed this Code Pattern? Check out our other [AI Code Patterns](https://developer.ibm.com/code/technologies/artificial-intelligence/).
+* **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
+* **With Watson**: Want to take your Watson app to the next level? Looking to utilize Watson Brand assets? [Join the With Watson program](https://www.ibm.com/watson/with-watson/) to leverage exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
+
+# License
 [Apache 2.0](LICENSE)
