@@ -2,7 +2,7 @@
 declared-services:
   wma-visual-recognition:
     label: watson_vision_combined
-    plan: free
+    plan: lite
   wma-natural-language-understanding:
     label: natural-language-understanding
     plan: free
