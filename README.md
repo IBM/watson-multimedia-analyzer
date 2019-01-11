@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/IBM/watson-multimedia-analyzer.svg?branch=master)](https://travis-ci.org/IBM/watson-multimedia-analyzer)
+[![Build Status](https://api.travis-ci.org/IBM/watson-multimedia-analyzer.svg?branch=master)](https://travis-ci.org/IBM/watson-multimedia-analyzer)
 
 # Using IBM Watson to enrich audio and visual files.
 
@@ -26,7 +26,7 @@ Visit the [Watson Accelerators](http://www.watsonaccelerators.com) portal to see
 * [Watson Speech-to-Text](https://www.ibm.com/watson/developercloud/speech-to-text.html): A service that converts human voice into written text.
 * [Watson Tone Analyzer](https://www.ibm.com/watson/developercloud/tone-analyzer.html): Uses linguistic analysis to detect communication tones in written text.
 * [Watson Visual Recognition](https://www.ibm.com/watson/developercloud/visual-recognition.html): Visual Recognition understands the contents of images - visual concepts tag the image, find human faces, approximate age and gender, and find similar images in a collection.
-* [Cloudant NoSQL DB](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db): A fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema.
+* [Cloudant NoSQL DB](https://cloud.ibm.com/catalog/services/cloudant): A fully managed data layer designed for modern web and mobile applications that leverages a flexible JSON schema.
 
 ## Featured Technologies
 * [Node.js](https://nodejs.org/): An asynchronous event driven JavaScript runtime, designed to build scalable applications.
@@ -34,7 +34,7 @@ Visit the [Watson Accelerators](http://www.watsonaccelerators.com) portal to see
 
 # Watch the Video
 
-[![](http://img.youtube.com/vi/nTzrA56zLTE/0.jpg)](https://www.youtube.com/watch?v=nTzrA56zLTE)
+[![](https://img.youtube.com/vi/nTzrA56zLTE/0.jpg)](https://www.youtube.com/watch?v=nTzrA56zLTE)
 
 # Steps
 
@@ -48,7 +48,7 @@ For convenience, we recommend that you use the ``Deploy to IBM Cloud`` button to
 * Once you have completed this journey, all of the Watson services can be automatically deleted along with deployed app.
 
 ## Deploy to IBM Cloud
-[![Deploy to IBM Cloud](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM/watson-multimedia-analyzer)
+[![Deploy to IBM Cloud](https://cloud.ibm.com/devops/setup/deploy/button.png)](https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/IBM/watson-multimedia-analyzer)
 
 1. Press the above ``Deploy to IBM Cloud`` button and then click on ``Deploy``.
 
@@ -273,7 +273,7 @@ After you have enriched your media files, you can deploy the application to IBM 
 
 > Note: If you already have the application deployed, you will either need to delete it (take care not to also delete any assoicated services at the same time), or modify the `manifest.yml` to change the name of the application. The default name is `watson-multimedia-analyzer`.
 
-* Download and install the [Cloud Foundry CLI](https://console.ng.bluemix.net/docs/cli/index.html#cli) tool.
+* Download and install the [Cloud Foundry CLI](https://cloud.ibm.com/docs/cli/index.html#cli) tool.
 * Login to the Cloud Foundry service.
 * From the root directory of this project run the following command:
 
@@ -327,11 +327,11 @@ Solution - wait 24 hours to run again.
 * [IBM Cloudant db](https://www.ibm.com/cloud/cloudant)
 
 # Learn more
-* **Artificial Intelligence Code Patterns**: Enjoyed this Code Pattern? Check out our other [AI Code Patterns](https://developer.ibm.com/code/technologies/artificial-intelligence/).
+* **Artificial Intelligence Code Patterns**: Enjoyed this Code Pattern? Check out our other [AI Code Patterns](https://developer.ibm.com/technologies/artificial-intelligence/).
 * **AI and Data Code Pattern Playlist**: Bookmark our [playlist](https://www.youtube.com/playlist?list=PLzUbsvIyrNfknNewObx5N7uGZ5FKH0Fde) with all of our Code Pattern videos
 * **With Watson**: Want to take your Watson app to the next level? Looking to utilize Watson Brand assets? [Join the With Watson program](https://www.ibm.com/watson/with-watson/) to leverage exclusive brand, marketing, and tech resources to amplify and accelerate your Watson embedded commercial solution.
 
 # License
-This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
+This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
-[Apache Software License (ASL) FAQ](http://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
+[Apache Software License (ASL) FAQ](https://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
