@@ -2,6 +2,10 @@
 
 # Using IBM Watson to enrich audio and visual files.
 
+## WARNING: This repository is no longer maintained. 
+
+This repository will not be updated. The repository will be kept available in read-only mode.
+
 In this developer journey we will use Watson services to showcase how media (both audio and video) can be enriched on a timeline basis. Credit goes to [Scott Graham](https://github.com/swgraham) for providing the initial application.
 
 ![](doc/source/images/architecture.png)
